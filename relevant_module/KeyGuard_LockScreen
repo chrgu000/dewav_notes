@@ -1,0 +1,83 @@
+NUMBER1.dismissButton在输入pin/puk码界面不见了　192822
+KeyguardSimPinPukMeView.java
+MT6737_O_N　-b master
+b09d743b12d3810cfeae03002db8768c7a159172
+
+NUMBER2.开机默认进入锁屏
+mExternallyEnabled
+ro.lockscreen.disable.default
+
+NUMBER3.设备处于锁定状态，状态栏无法下拉
+198714　　017aa7e4d4345fbadf1255dd16e7724fa63a93e1
+MT6737_O_N　master
+NotificationPanelView.java
+
+NUMBER4.解锁界面要加上阴影，现在看不清
+// dw alex: [198522] modified code @{
+//private float mViewAlpha = 0.0f; // Modified by Joseth
+private float mViewAlpha = 1.0f; 
+// @}
+
+NUMBER5.android 设置开机不自动进入锁屏状态 
+修改 private boolean mExternallyEnabled = true; 为 false
+
+NUMBER6.锁屏界面不显示紧急拨号
+boolean eccShouldShow = true;//eccButtonShouldShow();//modified by alex for bug 190316
+
+NUMBER7.如何在activity中控制屏幕点亮与关闭
+Android中通过各种Lock锁对电源进行控制，需要注意的是加锁和解锁必须成对出现。
+//启用屏幕常亮功能
+            PowerManager pm =(PowerManager) getSystemService(POWER_SERVICE); 
+            wakeLock= pm.newWakeLock(PowerManager.FULL_WAKE_LOCK| PowerManager.ACQUIRE_CAUSES_WAKEUP, myPowerManager.TAG);
+            wakeLock.acquire();
+
+//关闭 屏幕常亮功能
+if (wakeLock != null) {wakeLock.release();}  
+需要注意的是，您需要在mainfest权限获取
+要进行电源的操作需要在AndroidManifest.xml中声明该应用有设置电源管理的权限。
+<
+uses-permission 
+android:name
+="android.permission.WAKE_LOCK"
+/>
+<
+uses-permission 
+android:name
+="android.permission.DEVICE_POWER"
+/>
+另外，根据flags不同的值，实现不同级别的电源管理。
+关于int flags 各种锁的类型对CPU 、屏幕、键盘的影响： 
+PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯有可能是关闭的。
+SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，允许关闭键盘灯
+SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，允许保持屏幕高亮显示，允许关闭键盘灯
+FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度.
+
+
+NUMBER8:按power key灭屏时，背光有一个慢慢变暗的过程，如果希望马上灭屏，应该如何修改？
+[frameworks\base\services\core\java\com\android\server\display\DisplayPowerController.java]
+private static final int COLOR_FADE_OFF_ANIMATION_DURATION_MILLIS = 400; //将400改小，比如20或者0
+
+
+NUMBER9:怎样延长锁屏界面显示时间？
+修改KeyguardViewMediator.java中的KEYGUARD_LOCK_AFTER_DELAY_DEFAULT的值。
+
+
+NUMBER10:锁屏时，音量键也要有作用去减小增大音量 
+AudioService.java文件
+adjustSuggestedStreamVolume函数
+/*if(mKeyguardManager != null && mKeyguardManager.isKeyguardLocked()){
+	if(resolvedStream == AudioSystem.STREAM_VOICE_CALL || resolvedStream == AudioSystem.STREAM_SYSTEM || resolvedStream == 			AudioSystem.STREAM_RING){
+	Log.d(TAG, "adjustSuggestedStreamVolume keyguard locked, do nothing if  system volume");
+	return;
+}
+}*/
+
+NUMBER10:锁屏解锁距离
+2.<dimen name="unlock_falsing_threshold">80dp</dimen>
+onTrackingStopped-->showBouncer();
+
+NUMBER11:去掉多用户图标
+KeyguardStatusBarView.java
+updateVisibilities
+removeView(mMultiUserSwitch);
+

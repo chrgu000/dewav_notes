@@ -1,0 +1,72 @@
+为了解决在Ubuntu 12.04中adb遇到的如下问题：
+一、
+segon@segon-develop:~/work/tools$ adb remount
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+error: device not found
+
+二、
+segon@segon-develop:~/work/tools$ adb kill-server && adb start-server && adb remount
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+error: insufficient permissions for device
+segon@segon-develop:~/work/tools$ adb devices
+List of devices attached 
+???????????? no permissions
+
+1、通过apt-get安装adb
+
+sudo add-apt-repository ppa:nilarimogard/webupd8 sudo apt-get update sudo apt-get install android-tools-adb
+
+将android设备连接至电脑，执行adb shell会提示“error: device not found”
+
+
+2、将android设备连接至电脑，通过lsusb查看usb设备，如下红色部分对应的就是android设备
+
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub Bus 001 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub Bus 002 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching HubBus 001 Device 027: ID 1f3a:1002 Bus 002 Device 003: ID 046d:c077 Logitech, Inc.
+
+
+3、创建adb_usb.ini文件，写入id
+
+echo 0x1f3a > ~/.android/adb_usb.ini
+
+
+4、添加权限
+
+sudo vim /etc/udev/rules.d/70-android.rules
+
+加入以下内容，注意红色部分对应的就是lsusb得到的id
+
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1f3a", ATTRS{idProduct}=="1002",MODE="0666"
+
+
+5、重启USB服务
+
+$sudo chmod a+rx /etc/udev/rules.d/70-android.rules $sudo service udev restart
+
+
+6. 重启adb服务，adb devices有设备说明adb安装成功
+
+$adb kill-server
+
+$sudo adb start-server
+
+$adb devices
+List of devices attached815105148800601fe42     device
+
+PS: 
+    1、不同的手机可能有不同的"idVendor" 和 "idProduct", 步骤4中要为每个不同的"idVendor" 和 "idProduct"添加对应的描述
+
+
+
+
+ota升级
+6.0M版本
+./build/tools/releasetools/ota_from_target_files  -s ./device/mediatek/build/releasetools/mt_ota_from_target_files  --block -k   device/mediatek/common/security/e3656/releasekey  -i  C002.zip DAMON.zip update.zip
+
+要先source build/envsetup.sh  
+lunch full_a3557-eng
+./build/tools/releasetools/ota_from_target_files -k device/mediatek/common/security/g3557/releasekey  -i  old.zip new.zip update.zip
+./build/tools/releasetools/ota_from_target_files -k build/target/product/security/release/releasekey   -i  c002.zip DAMON.zip  update_c002-damon.zip
+eng版本
+./build/tools/releasetools/ota_from_target_files -k build/target/product/security/testkey   -i  L103.zip L104.zip update222.zip

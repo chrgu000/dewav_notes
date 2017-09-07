@@ -1,0 +1,63 @@
+1.默认日期格式
+198086　　2457dbe48d917a555b6d0e820f5dd28e28bdfaf1
+MT6737_O_N　master
+en.txt
+
+2.闹钟设置开启振动，灭屏后为什么只有闹铃没有震动了？
+google原生设计如此，灭屏后关闭震动，可参考代码
+VibratorService.java中的： 
+ BroadcastReceiver mIntentReceiver = new BroadcastReceiver() { 
+        public void onReceive(Context context, Intent intent) { 
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) { 
+                synchronized (mVibrations) { 
+                    doCancelVibrateLocked(); 
+
+                    int size = mVibrations.size(); 
+                    for(int i = 0; i < size; i++) { 
+                        unlinkVibration(mVibrations.get(i)); 
+                    } 
+
+                    mVibrations.clear(); 
+                } 
+            } 
+        } 
+    }; 
+
+
+3.如何修改或精确设置出厂默认时间
+systemRunning()
+today.set(11,11, mDefaultYear ); //修改为2014年12月11日.
+
+4.默认日期的格式
+external\icu\icu4c\source\data\locales\en.txt
+DateTimePatterns{
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
+                "h:mm:ss a",
+                "h:mm a",
+                "EEEE, MMMM d, y",
+                "MMMM d, y",
+                "MMM d, y",
+
+                "m/d/yy"  //根据需求修改红色内容，如改为d/y/MMM等
+
+                "{1},{0}"
+
+
+5.如何修改时间中的上午/下午显示 AM/PM
+ \external\icu\icu4c\source\data\locales
+AmPmMarkers元素
+
+
+6.RTC默认日期
+#define RTC_DEFAULT_YEA        2012
+#define RTC_DEFAULT_MTH        2
+#define RTC_DEFAULT_DOM        1
+<integer name="default_restore_year">2013</integer>
+persist.sys.timezone = Europe/Moscow
+
+Locale.getDefault()
+
+
+
+Locale.GERMANY/Locale.GERMANY Locale.CHINA

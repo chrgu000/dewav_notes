@@ -1,0 +1,57 @@
+1.设置状态栏颜色
+makeStatusBarView
+//mStatusBarView.setBackgroundColor(Color.parseColor("#FF0000"));
+
+2.透明及渐变色
+这是google default设计，如果桌面壁纸是白色的时候比较明显，这个渐进的效果是通过背景图来设置的，在frameworks/base/packages/systemui/res/ 里面drawable-hdpi（如果是其他density，请找对应的资源）中status_background.9.png替换这个图片；
+或者修改代码绘制图片的地方：
+BarTransitions.java文件最后draw的方法mGradient.draw(canvas); //注释掉这一行即不绘制这个图片就可以了
+
+3.wifi通知栏显示名称
+QuickSettingsConnectionModel.java
+mIntentReceiver
+
+
+4.收起状态栏通知栏
+public static final void collapseStatusBar(Context ctx) {
+	 Object sbservice = ctx.getSystemService("statusbar");
+	 try {
+		 Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+		 Method collapse;
+		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+		 	collapse = statusBarManager.getMethod("collapsePanels");
+		 } else {
+		 	collapse = statusBarManager.getMethod("collapse");
+		 }
+	 	 collapse.invoke(sbservice);
+	 } catch (Exception e) {
+	 	e.printStackTrace();
+	 }
+ }
+
+
+5.开机判断哪张卡是2g卡还是3g 卡
+FAQ02912
+[FAQ02097][SIM]Default sim setting客制化(开机提示-新卡插入/有卡拔除)
+
+
+6.信号H, H+替代3g等 
+198712　　d3563617741853599dbbfdd3f6686770ad87cf32
+MT6737_O_N　master
+
+7.两个wifi热点
+//mIconController.setIconVisibility(mSlotHotspot, enabled);
+
+8.[FAQ19312]Android7.0状态栏信号格显示感叹号
+MobileSignalController.java
+updateConnectivity
+mCurrentState.inetCondition = 1;
+
+
+
+
+
+
+
+
+

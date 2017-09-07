@@ -1,0 +1,83 @@
+/**************************SED OPERATE START**************************************
+删除命令d
+sed '/^$/d' file
+
+sed '2,$d' file
+
+替换命令s　
+sed 's/book/books/' file
+
+-n选项和p命令一起使用表示只打印那些发生替换的行：
+sed -n 's/test/TEST/p' file
+
+直接编辑文件选项-i，会匹配file文件中每一行的第一个book替换为books
+sed -i 's/book/books/g' file
+sed -i 's/book/books/2g' file 第二行开始匹配
+
+子串匹配标记\1    \(xxxx\)
+echo this is digit 7 in a number | sed 's/digit \([0-9]\)/\1/' 
+this is 7 in a number
+命令中 digit 7，被替换成了 7。样式匹配到的子串是 7，\(..\) 用于匹配子串，对于匹配到的第一个子串就标记为 \1，依此类推匹配到的第二个结果就是 \2
+
+sed -n '/Good/p' text2　搜索列出包含Good的行
+sed -n '2,$p' text2 　显示从第二行到最后一行
+
+已匹配子符串标记＆
+sed 's/^192.168.0.1/&localhost/' file 192.168.0.1localhost
+
+正则表达式 \w\+ 匹配每一个单词，使用 [&] 替换它，& 对应于之前所匹配到的单词： 
+echo this is a test line | sed 's/\w\+/[&]/g'
+[this] [is] [a] [test] [line]
+
+echo  456 BBB | sed 's/\([0-9]\+\) \([A-Z]\+\)/\2 \1/'
+
+sed 's/ //2'替换第二个匹配的字符
+/**************************SED OPERATE  END**************************************
+
+/**************************AWK START**************************************
+awk的原理是必须的：读入有'\n'换行符分割的一条记录，将记录按指定的域分隔符划分域，$0表示所有域, $1表示第一个域, $n表示第n个域。 默认域分隔符是空格键或tab键。
+
+test.txt中的内容：
+xxx     Math English C++  Experiment
+Monkey  100   90     95   Good
+Cat     80    100    60   Perfect
+Dog     90    60     70   Great
+Tiger   95    85     90   Fantastic
+
+awk '{print $2}' test.txt  (awk '{if(1<2) printf("%s\n", $2)}' test.txt) 
+Math  
+100  
+80  
+90  
+95
+
+awk的一般格式：awk [option]  'pattern {action}' test.txt,  比如上面的awk '{print $2}' test.txt, 此时，采用默认选项， 且条件永远为真。
+
+xxx|Math|English|C++|Experiment  
+Monkey|100|90|95|Good  
+Cat|80|100|60|Perfect  
+Dog|90|60|70|Great  
+Tiger|95|85|90|Fantastic 
+
+$ awk -F "|" '{print $2}' a.txt  
+Math  
+100  
+80  
+90  
+95
+
+NR是当前的行数 NF 表示当前行有多少个段 (number of row/number of field) -F 指定分割符
+**************************AWK END**************************************/
+
+/**************************tr命令 START**************************************
+tr A-Z a-z
+
+echo "hello 123 world 456" | tr -d '0-9'
+hello world
+
+echo aa.,a 1 b#$bb 2 c*/cc 3 ddd 4 | tr -d -c '0-9 \n' 
+1  2  3  4
+
+echo "thissss is a text    linnnnnnne." | tr -s ' sn' 
+this is a text line.
+**************************tr命令 end********************************/

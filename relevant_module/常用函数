@@ -1,0 +1,147 @@
+layout布局实例化
+实例化xml中的Layout布局在开发中经常会用到，有几种方法可以使用
+1、在Activity中使用getLayoutInflater()方法
+　　View layout = getLayoutInflater.inflate(R.layout.item, null);
+2、在适配器中传递上下文一般使用静态方法
+　　View layout = View.inflate(context, R.layout.item, null);
+3、也可以使用
+　　LayoutInflater inflater = LayoutInflater.from(context);
+　　View layout = inflater.inflate(R.layout.item,null);
+
+ View rootView=   LayoutInflater.inflate(R.layout.mylayout) ;
+ ListView myListView = (ListView) rootView.findViewById(R.id.xxListView); 
+tv.setEllipsize(TruncateAt.valueOf("END"));
+Android 中的view使用requestFocus()焦点具体的方法如下：
+1.view.setFocusable(true);
+2.view.setFocusableInTouchMode(true);
+
+
+字符窜操作
+String contentTitle2 = contentTitle.replace(" ","").replace("-","");
+string.length()
+string.substring(0, string.length() - 1)
+languageCode.equals("ar")
+String s1 = new String("hello"); 
+s1+="拼接字符串的时间";    
+s4.append("拼接字符串的时间"); 
+s3=s3.concat("拼接字符串的时间");    
+String.charAt() 
+Integer.toString(i)整形转string
+EditText value1 = (EditText)findViewById(R.id.value1);
+v1 = Integer.parseInt(value1.getText().toString());
+字符窜中是否存在某个字符
+int i=s.indexOf("b");
+(str.Contains("c")) 
+遍历 for each
+替换字符窜
+if(TMP_DATE.indexOf("CST") != -1) {
+	data = TMP_DATE.replaceAll("CST", "WIB");
+}
+
+
+Android Drawable、Bitmap、Canvas和Paint的区别 
+    protected void onDraw(Canvas canvas) {  
+      // TODO Auto-generated method stub  
+      super.onDraw(canvas);  
+      Paint paint = new Paint();  
+      paint.setColor(Color.RED);  
+      //直接画一条直线，简单  
+      canvas.drawLine(0, 0, 50, 50, paint);  
+      //加载图片资源文件  
+      Resources  r = this.getContext().getResources();  
+      Drawable drawale = r.getDrawable(R.drawable.yellowstar);  
+      //创建内存中的一张图片  
+      Bitmap bitmap = Bitmap.createBitmap(12,12,Bitmap.Config.ARGB_8888);  
+      //图片画布  
+      Canvas cas = new Canvas(bitmap);  
+      drawale.setBounds(0,0,12,12);  
+      //图片加载到bitmap上  
+      drawale.draw(cas);  
+      //画到View上  
+     　canvas.drawBitmap(bitmap, 30, 80, paint);  
+	　canvas.drawBitmap(girlBitmap, girlSrcRect, girlDesRect, null);
+    }  
+
+
+
+
+你要知道:
+
+    screenrecord是一个shell命令
+    支持Android4.4(api level 19)以上
+    支持视频格式：mp4
+
+
+一些限制：
+
+    某些设备可能无法直接额录制，原因是分辨率太高，如果遇到此类问题，请试着指定较低的分辨率
+    不支持录制过程中屏幕旋转，如果录制过程中旋转，有可能画面被切段
+    录制视频的时候声音不会被路下来
+
+
+开始录制命令：
+adb shell screenrecord /sdcard/demo.mp4
+说明：录制手机屏幕，视频格式为mp4，存放到手机sd卡里，默认录制时间为180s
+
+录制限制时间：
+参数： --time-limit
+adb shell screenrecord  --time-limit 10 /sdcard/demo.mp4
+说明:限制视频录制时间为10s,如果不限制,默认180s
+
+指定视频分辨率大小：
+参数: --size
+
+adb shell screenrecord --size 1280*720 /sdcard/demo.mp4
+说明:录制视频，分辨率为1280*720，如果不指定默认使用手机的分辨率,为获得最佳效果，请使用设备上的高级视频编码（AVC）支持的大小
+
+指定视频比特率：
+参数： --bit-rate
+
+adb shell screenrecord --bit-rate 6000000 /sdcard/demo.mp4
+说明:指定视频的比特率为6Mbps,如果不指定,默认为4Mbps. 你可以增加比特率以提高视频质量或为了让文件更小而降低比特率
+
+
+
+模拟执行back键
+public void onBack(){  
+new Thread(){  
+public void run() {	
+try{  
+Instrumentation inst = new Instrumentation();	
+inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);  
+}  
+catch (Exception e) {  
+Log.e("Exception when onBack", e.toString());	
+}	
+}  
+}.start();  
+}	
+
+
+
+判断屏幕是否锁屏
+KeyguardManager
+ mKeyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+
+boolean
+
+flag = mKeyguardManager.inKeyguardRestrictedInputMode();
+
+
+正则表达式：
+String tempString = "04562854223333322";
+String rex = "[1-9]\\d{5}.*[22]";
+Pattern highlight = Pattern.compile(rex, Pattern.UNICODE_CASE);
+Matcher m = highlight.matcher(tempString);
+Log.i("alex111","ddddddd");
+while (m.find()) {
+	//buf.setSpan(new StyleSpan(Typeface.BOLD), m.start(), m.end(), 0);
+    int i = m.start();
+    int j = m.end();
+    Log.i("alex111","m.start:"+i+"  m.end:"+j+"  m.group():"+m.group());
+}
+
+
+
+
+

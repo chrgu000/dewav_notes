@@ -1,0 +1,421 @@
+如何实现双击 home 弹RecentAPP
+[DESCRIPTION]
+如何实现双击 home 弹RecentAPP
+你可以参考如下 sample code 自行实现
+ 
+[SOLUTION]
+请修改 phoneWindowManager.java 的 interceptKeyBeforeQueueing 方法
+找到参考位置后, 加入注释所述代码:
+ 
+  //以下是原有代码, 即参考行
+  if (down && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
+                && event.getRepeatCount() == 0) {
+            performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+        }
+  //参考行到此结束
+  
+        int result = 0; //原为 int result, 请加入初始值.
+  
+  // mtk sample code for double home click detection BEGIN.
+  
+  //请在类中补充 boolean homeDownDoubleClick = false; 的定义
+  //请在类中补充 long lastHomeDownTime=0; 的定义
+  //请在类中补充 long lastHomeUpTime=0; 的定义
+  //检测原理: 检测上一次按下的 home key 与本次按下的 home key 时间间隔是否 < 500ms
+  //if yes, 则认为是双击 home key 
+ 
+if(keyCode == KeyEvent.KEYCODE_HOME){
+   if(down){
+  // this is home down
+  if(((event.getEventTime() - lastHomeDownTime) < 500)){
+   homeDownDoubleClick = true;
+  }else{
+   homeDownDoubleClick = false;
+  }
+  lastHomeDownTime = event.getEventTime();
+ }else{
+  // then home up comes
+  Log.d(TAG,"homeDownDoubleClick="+homeDownDoubleClick+",lastHomeDownTime="+lastHomeDownTime+",lastHomeUpTime="+lastHomeUpTime+",this home up="+event.getEventTime());
+  if(homeDownDoubleClick && ((event.getEventTime() - lastHomeUpTime) < 500)){
+   Log.d(TAG,"double click on home detected");
+   try {
+    IStatusBarService statusbar = getStatusBarService();
+    if (statusbar != null) {
+     statusbar.preloadRecentApps();
+     statusbar.toggleRecentApps();
+                }
+            } catch (RemoteException e) {
+    Slog.e(TAG, "RemoteException when preloading recent apps", e);
+                mStatusBarService = null;
+   }
+    
+   result |= ACTION_WAKE_UP;
+   return result;
+  }
+  lastHomeUpTime = event.getEventTime();
+ }
+}
+
+  // mtk sample code for double home click detection END.
+
+默认主题
+Configuration.java
+DEFAULT_THEME
+
+mtk自带fota
+scm下的.mk   MTK_SYSTEM_UPDATE_SUPPORT=yes
+mediatek/packages/apps/SystemUpdate/res/values/adress.xml
+
+／＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊通知栏 状态栏------------------------------
+设置状态栏颜色
+makeStatusBarView
+//mStatusBarView.setBackgroundColor(Color.parseColor("#FF0000"));
+透明及渐变色
+这是google default设计，如果桌面壁纸是白色的时候比较明显，这个渐进的效果是通过背景图来设置的，在frameworks/base/packages/systemui/res/ 里面drawable-hdpi（如果是其他density，请找对应的资源）中status_background.9.png替换这个图片；
+或者修改代码绘制图片的地方：
+BarTransitions.java文件最后draw的方法mGradient.draw(canvas); //注释掉这一行即不绘制这个图片就可以了
+
+wifi通知栏显示名称
+QuickSettingsConnectionModel.java
+mIntentReceiver
+
+app显示在通知栏
+//add by sela for add Notification for torch begin
+private void setupNotification(){
+    Intent hideIntent = new Intent();
+    hideIntent.setAction("com.sela.flashlight.change_flash_status");
+    PendingIntent localPendingIntent = PendingIntent.getBroadcast(this, this.hashCode(),
+        hideIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    Notification localNotification = new Notification(R.drawable.ic_launcher_flashlight, null, System.currentTimeMillis());
+    localNotification.flags = 50;
+    localNotification.setLatestEventInfo(this, getString(R.string.app_name), getString(R.string.tap_to_close), localPendingIntent);
+    ((NotificationManager)getSystemService("notification")).notify(0, localNotification);
+}
+//end
+
+通知栏 去掉信号条上的g 3g图标
+SignalClusterView.java (base\packages\systemui\src\com\android\systemui\statusbar)
+apply---> mSignalNetworkType[i].setImageDrawable(null);mSignalNetworkType[i].setVisibility(View.GONE);
+CUST_TYPE_ICON_GEMINI_HIDE 
+
+电池电量百分比
+<!-- Default for Settings.Secure.BATTERY_PERCENTAGE -->
++    <bool name="def_battery_percentage">true</bool>
+
+滑动锁屏状态下状态栏可以下拉是google 4.0 默认的设计。如果要禁止此功能，请修改KeyguardViewMediator.java的adjustStatusBarLocked()方法，将
+if (isSecure() || !ENABLE_INSECURE_STATUS_BAR_EXPAND) {
+// showing secure lockscreen; disable expanding.
+flags |= StatusBarManager.DISABLE_EXPAND;}修改为：
+if (isSecure() || ENABLE_INSECURE_STATUS_BAR_EXPAND) {
+通知栏有时候显示三个sim卡的信息
+header_emergency_calls_only
+updateVisibilities
+updateNetworkName
+开机默认进入锁屏
+mExternallyEnabled
+ro.lockscreen.disable.default
+
+收起状态栏通知栏
+	public static final void collapseStatusBar(Context ctx) {
+		 Object sbservice = ctx.getSystemService("statusbar");
+		 try {
+			 Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+			 Method collapse;
+			 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			 	collapse = statusBarManager.getMethod("collapsePanels");
+			 } else {
+			 	collapse = statusBarManager.getMethod("collapse");
+			 }
+		 	 collapse.invoke(sbservice);
+		 } catch (Exception e) {
+		 	e.printStackTrace();
+		 }
+	 }
+／＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊通知栏------------------------------
+
+紧急号码
+PhoneNumberUtils.java(framework)
+PhoneNumberExt.java(mediatek)
+飞行模式下插入双卡拨打紧急号码会用卡2拨出  6582_L S3555_3532
+TelephonyConnectionService.java-->pickBestPhoneForEmergencyCall
+if (selectPhone == null) {
+	//Log.d(this, "pickBestPhoneForEmergencyCall, return default phone");
+	//selectPhone = PhoneFactory.getDefaultPhone();  
+	Log.d(this, "pickBestPhoneForEmergencyCall, return phone0"); //modified by alex for bug 174952
+	selectPhone = PhoneFactory.getPhone(0);
+}
+
+frameworks/base/telephony/java/android/telephony/PhoneNumberUtils.java
+isEmergencyNumber() isEmergencyNumberInternal
+return (number.startsWith("112") || number.startsWith("911"));
+isPotentialEmergencyNumber
+
+短信默认值
+pref_title_mms_group_mms
+Mmspreferences.xml
+pref_key_mms_group_mms
+
+墙纸不随主菜单拖动
+L3368/packages/apps/Launcher2
+workspace.java
+protected void onDraw(Canvas canvas) {
+        //updateWallpaperOffsets();//注释掉此句
+	...
+
+蓝牙/wifi热点
+source/mediatek/config/common/custom.conf
+第一次开机
+156742
+
+电池相关
+BatteryService.java
+String chargingCount = readVcmCurrentTimes("proc/chr_limit_time");
+SystemProperties.set("sys.charging.count", chargingCount);
+
+电量还有5%时弹出提示框
+PowerUI.java
+
+／＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊Launcher------------------------------
+按home键默认显示到第一页
+Workspace.java
+moveToDefaultScreen
+主菜单图标排序
+default_toppackage.xml
+home图标排序
+default_workspace.xml
+Launcher3中隐藏某一项
+DewavAppFilter.java
+if (pkgName.equals("com.google.android.inputmethod.pinyin")
+Launcher.java　onClickAllAppsButton　startAppShortcutOrInfoActivity
+
+第一次开机
+private final String SYMPHONY_FIRST_BOOTUP = "symphony_first_bootup";
+
+if(mSharedPrefs.getBoolean(SYMPHONY_FIRST_BOOTUP, true)){
+	SharedPreferences.Editor editor = mSharedPrefs.edit();
+	editor.putBoolean(SYMPHONY_FIRST_BOOTUP, false);
+	editor.apply();
+}
+
+--------------------------------------------------------------------------------/
+修改app为不可卸载
+-LOCAL_MODULE_PATH := $(TARGET_OUT)/vendor/operator/app
+
+SN号要求写入18位
+DeviceInfoSettings.java
+
+默认浏览器
+PackageManagerService.java
+-   ComponentName component = new ComponentName("com.android.chrome","com.google.android.apps.chrome.Main");
++   ComponentName component = new ComponentName("com.android.browser","com.android.browser.BrowserActivity");
+-		if (packageName.equals("com.android.chrome")) no_browser = false;
++		if (packageName.equals("com.android.browser")) no_browser = false;
+
+销量统计短信内容不对
+SmsSendManager.java
+
+ if(mUpdateMonitor.isDeviceProvisioned()){//判断是否首次开机
+／＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊Camera------------------------------
+照片信息
+MediaDetails.java
+添加音量功能菜单
+sela  Q34_2SIM  Q34_IMOBILE
+
+01-01 08:28:21.753   160   160 D CameraClient: getParameters (pid 6032) (3dnr-mode=on;afeng-max-focus-step=0;afeng-min-focus-step=0;antibanding=auto;antibanding-values=off,50hz,60hz,auto;auto-exposure-lock=false;auto-exposure-lock-supported=true;auto-whitebalance-lock=false;auto-whitebalance-lock-supported=true;brightness=middle;brightness-values=low,middle,high;brightness_value=0;burst-num=1;cap-mode=normal;cap-mode-values=normal,face_beauty;capfname=/sdcard/DCIM/cap00;contrast=middle;contrast-values=low,middle,high;effect=none;effect-values=none,mono,negative,sepia,sepiablue;eng-s-shad-t=0;eng-shad-t=0;exposure-compensation=0;exposure-compensation-step=1.0;fb-enlarge-eye=off;fb-enlarge-eye-max=4;fb-enlarge-eye-min=-4;fb-extreme-beauty=true;fb-face-pos=-2000:-2000;fb-sharp=0;fb-sharp-max=4;fb-sharp-min=-4;fb-skin-color=0;fb-skin-color-max=4;fb-skin-color-min=-4;fb-slim-face=off;fb-slim-face-max=4;fb-slim-face-min=-4;fb-smooth-level=0;fb-smooth-level-max=4;fb-smooth-level-min=-4;fb-touch-pos=-2000:-2000;flash-duty-max=1;flash-duty-min=0;flash-duty-value=
+01-01 08:28:21.754  6032  6053 I CameraFramework: Camera framework getParameters =3dnr-mode=on;afeng-max-focus-step=0;afeng-min-focus-step=0;antibanding=auto;antibanding-values=off,50hz,60hz,auto;auto-exposure-lock=false;auto-exposure-lock-supported=true;auto-whitebalance-lock=false;auto-whitebalance-lock-supported=true;brightness=middle;brightness-values=low,middle,high;brightness_value=0;burst-num=1;cap-mode=normal;cap-mode-values=normal,face_beauty;capfname=/sdcard/DCIM/cap00;contrast=middle;contrast-values=low,middle,high;effect=none;effect-values=none,mono,negative,sepia,sepiablue;eng-s-shad-t=0;eng-shad-t=0;exposure-compensation=0;exposure-compensation-step=1.0;fb-enlarge-eye=off;fb-enlarge-eye-max=4;fb-enlarge-eye-min=-4;fb-extreme-beauty=true;fb-face-pos=-2000:-2000;fb-sharp=0;fb-sharp-max=4;fb-sharp-min=-4;fb-skin-color=0;fb-skin-color-max=4;fb-skin-color-min=-4;fb-slim-face=off;fb-slim-face-max=4;fb-slim-face-min=-4;fb-smooth-level=0;fb-smooth-level-max=4;fb-smooth-level-min=-4;fb-touch-pos=-2000:-2000;flash-duty-max=1;flash-duty-min=0;flash-duty-value=-1;flash-mode=auto;flash-mode-values=off,on,auto,red-eye,torch;flash-step-max=0;flash-step-min=0;focal-length=3.5;focus-distances=0.95,1.9,Infinity;focus-fs-fi=0;focus-fs-fi-max=65535;focus-fs-fi-min=0;focus-mode=infinity;focus-mode-values=infinity;horizontal-view-angle=46;iso-speed=auto;iso-speed-values=auto,100,200,400;jpeg-quality=95;jpeg-thumbnail-height=128;jpeg-thumbnail-quality=100;jpeg-thumbnail-size-values=0x0,160x128,320x240;jpeg-thumbnail-width=160;m-sr-g=0;m-ss=0;max-exposure-compensation=2;max-num-detected-faces-hw=15;max-num-detected-faces-sw=0;max-num-focus-areas=0;max-num-metering-areas=9;max-zoom=10;min-exposure-compensation=-2;mtk-123-shad-s=false;mtk-awb-s=false;mtk-cam-mode=1;mtk-shad-s=false;picture-format=jpeg;picture-format-values=jpeg;picture-size=1600x1200;picture-size-values=176x144,320x240,352x288,480x320,480x368,640x480,1024x768,1280x720,1280x768,1280x960,1600x1200,1920x1088;preferred-preview-size-for-video=640x480;preview-format=yuv420sp;preview-format-values=yuv420sp,yuv420p,yuv420i-yyuvyy-3plane;preview-fps-range=5000,60000;preview-fps-range-values=(5000,60000);preview-frame-rate=30;preview-frame-rate-values=20,15,20,24,30,30;preview-size=1024x768;preview-size-values=176x144,320x240,352x288,480x320,480x368,640x480,1024x768,1280x720,1280x768,1280x960,1600x1200,1920x1088;rec-mute-ogg=0;recording-hint=false;rotation=270;saturation=middle;saturation-values=low,middle,high;scene-mode=auto;scene-mode-values=auto,normal,portrait,landscape,night,sunset,sports;sensor-type=252;smooth-zoom-supported=true;sr-awb-s=false;sr-shad-s=false;stereo-image-refocus=off;vertical-view-angle=40;video-frame-format=yuv420p;video-size=640x480;video-size-values=176x144,320x240,352x288,480x320,640x480;video-snapshot-supported=true;video-stabilization=false;video-stabilization-supported=false;whitebalance=tungsten;whitebalance-values=auto,incandescent,daylight,cloudy-daylight,fluorescent,tungsten;zoom=0;zoom-ratios=100,114,132,151,174,200,229,263,303,348,400;zoom-supported=true;zsd-mode=off;zsd-mode-values=on,off
+01-01 08:28:21.756  6032  6053 I CAM_ori/CameraLinkPreview: mCamera.getParameters().getPreviewFormat() = 17
+
+1.    第一次进camera时候的默认值　前后摄video quality
+filterUnsupportedOptions-->resetIfInvalid-->pref.setValueIndex(1);
+判断当前摄像头
+  CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+   if(info.facing == CameraInfo.CAMERA_FACING_FRONT)
+restorePreferences
+--------------------------------------------------------------------------------/
+系统的返回键盘和菜单键
+framework/.../NavigationBarView.java
+
+飞行模式　蓝牙　wifi可以使用
+q3468_imobile/source/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+-    <string name="def_airplane_mode_radios" translatable="false">cell,bluetooth,wifi,nfc,wimax</string>
++    <string name="def_airplane_mode_radios" translatable="false">cell,bluetooth,nfc,wimax</string>
+
+开机判断哪张卡是2g卡还是3g 卡
+FAQ02912
+[FAQ02097][SIM]Default sim setting客制化(开机提示-新卡插入/有卡拔除)
+/------------------------------语言随sim卡变化 START---------------------------------------------
+
+159827  AOSP6582_L  getLocaleForLanguageCountry
+
+isSetLanguageBySIM()
+
+可如下修改: 取消从EF中获取的途径.
+SIMRecords.java中
+protected void onAllRecordsLoaded(){
+...
+setLocaleFromUsim(); //注释掉这行
+...
+} 
+
+AndroidRuntime.cpp
+static void readLocale(char* language, char* region)-->if (*propLang == 0 && *propRegn == 0) {
+关于sim语言处理在如下地方
+MccTable.java alps\frameworks\opt\telephony\src\java\com\android\internal\telephony
+public static void updateMccMncConfiguration(Context context, String mccmnc,
+boolean fromServiceState) {
+……
+Locale locale = null;
+if (mcc != 0) {
+setTimezoneFromMccIfNeeded(context, mcc);
+locale = getLocaleFromMcc(context, mcc);
+} 
+
+一路是获得IMSI后通过mcc mnc去更新语言,别一路是通过sim卡中的EF文件中保存的语言去更新
+----------------------------语言随sim卡变化 END-------------------------------------------------/-
+
+//--------------------振动---------------------------
+[QUESTION]
+闹钟设置开启振动，灭屏后为什么只有闹铃没有震动了？
+
+[ANSWER]
+google原生设计如此，灭屏后关闭震动，可参考代码
+VibratorService.java中的： 
+ BroadcastReceiver mIntentReceiver = new BroadcastReceiver() { 
+        public void onReceive(Context context, Intent intent) { 
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) { 
+                synchronized (mVibrations) { 
+                    doCancelVibrateLocked(); 
+
+                    int size = mVibrations.size(); 
+                    for(int i = 0; i < size; i++) { 
+                        unlinkVibration(mVibrations.get(i)); 
+                    } 
+
+                    mVibrations.clear(); 
+                } 
+            } 
+        } 
+    }; 
+
+///---------------------------------------------------------------
+1.如何开启长按home键启动搜索应用，请参考FAQ11564.
+2.如何设置默认的谷搜索应用？
+    修改frameworks/base/services/core/java/com/android/server/search/SearchManagerService.java的getAssistIntent方法
+
+public ComponentName getAssistIntent(int userHandle) {
+   try {
+       userHandle = ActivityManager.handleIncomingUser(Binder.getCallingPid(), Binder.getCallingUid(),
+        userHandle, true, false, "getAssistIntent", null);
+        IPackageManager pm = AppGlobals.getPackageManager();
+        Intent assistGoogleIntent = new Intent(Intent.ACTION_ASSIST);
+        assistGoogleIntent.setPackage("com.google.android.googlequicksearchbox"); //默认搜索的包名
+        ResolveInfo info = pm.resolveIntent(assistGoogleIntent,
+        assistGoogleIntent.resolveTypeIfNeeded(mContext.getContentResolver()),
+        PackageManager.MATCH_DEFAULT_ONLY, userHandle);
+        if (info != null) {
+             return new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name);
+         }
+        Intent assistIntent = new Intent(Intent.ACTION_ASSIST);
+        info = pm.resolveIntent(assistIntent, assistIntent.resolveTypeIfNeeded(mContext.getContentResolver()),
+        PackageManager.MATCH_DEFAULT_ONLY, userHandle);
+        if (info != null) {
+            return new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name);
+        }
+     } catch (RemoteException re) {
+  // Local call
+      Log.e(TAG, "RemoteException in getAssistIntent: " + re);
+    } catch (Exception e) {
+      Log.e(TAG, "Exception in getAssistIntent: " + e);
+      }
+ return null;
+}
+
+//------------------------Notification----Builder--
+
+    public void function() {
+        int notificationId = R.string.app_name;
+        Log.i("alex"," 111");
+        Intent updateIntent = new Intent(MainActivity.this,
+                DrawLinesActivity2.class);
+        Log.i("alex"," 222");
+        PendingIntent pt =PendingIntent.getActivity (this , 0,updateIntent , 0);
+        Log.i("alex"," 333");
+        Notification.Builder notification = new Notification.Builder(this)
+                .setTicker("alex")
+                .setWhen(System.currentTimeMillis())
+                .setContentTitle("alex111")
+                .setContentText("alex222")
+                .setSmallIcon(R.drawable.stat_notify_sms)
+                .setContentIntent(pt)
+                ;
+        Log.i("alex"," 444");
+
+
+        NotificationManager notificationManager =
+                (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(notificationId, notification.getNotification());
+
+    }
+
+关于如何让应用程序不显示在“最近使用”的列表中 
+android:excludeFromRecents="true"
+-----------------------------------------------//
+[FAQ10009]阿拉伯语、波斯语等RTL语言下部分控件位置不对
+阿拉伯语言rtl下
+上面那些图片位置在frameworks\base\core\res\res\drawable-hdpi，重新绘制后放到
+frameworks\base\core\res\res\drawable-ldrtl-hdpi目录下
+
+//获取运营商名字
+TelephonyManager mTelephonyManager =
+						(TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+		int sub1 = SubscriptionManager.getSubIdUsingPhoneId(0);
+		int sub2 = SubscriptionManager.getSubIdUsingPhoneId(1);
+		String tempString1 = null;
+		String tempString2 = null;
+		String [] strArray = new String [3];
+		
+		if (mTelephonyManager.getNetworkOperatorName(sub1) != null){
+			tempString1 = mTelephonyManager.getNetworkOperatorName(sub1);
+		}
+
+进入youtubo降低背光
+ActivityThread.java
+handleResumeActivity
+	String currentPackageName = r.intent.getComponent().getPackageName();
+	        Log.i("sela","packageName="+currentPackageName);
+        if(currentPackageName.equals("com.google.android.youtube"))
+        {
+              if(!haveGotoYoutubo)
+              {
+			oldBright = android.provider.Settings.System.getInt(r.activity.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,100);
+ 			oldAuto = android.provider.Settings.System.getInt(r.activity.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE,0);
+              }
+	       haveGotoYoutubo = true;	  
+		Intent intent = new Intent("com.dewav.writesettingprovidervalue");
+              intent.putExtra("bright_value",30);
+              intent.putExtra("auto_mode",0);
+              Log.i("sela","sendbroadcast111s="+currentPackageName);
+              r.activity.sendBroadcast(intent);
+	 }
+	 else if(haveGotoYoutubo)	
+	 {
+       	      Intent intent = new Intent("com.dewav.writesettingprovidervalue");
+                    intent.putExtra("bright_value",oldBright);
+		     // intent.putExtra("bright_value",255);		
+                    intent.putExtra("auto_mode",oldAuto);
+                    Log.i("sela","sendbroadcast222s="+currentPackageName);
+                    r.activity.sendBroadcast(intent);
+		      haveGotoYoutubo = false;	 
+	 }
+
+assist选项　onCreateActionMode
+audio,music音乐
+android.intent.action.HEADSET_PLUG
+AudioManager.ACTION_AUDIO_BECOMING_NOISY
+
+滑动速度
+config_viewMaxFlingVelocity
+
+通话接听电话拨号
+logCall保存通话记录

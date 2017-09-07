@@ -1,0 +1,115 @@
+1.默认浏览器 default browser
+config.xml
+<string name="default_browser" translatable="false">com.android.chrome</string>
+
+PackageManagerService.java
+PackageManagerService函数最后
+ if (isFirstBoot()) {
+    	applyFactoryDefaultBrowserLPw(0);//add by alex for bug 192836
+    }
+}
+
+2.默认音量修改 volume adjust
+AudioSystem.java　　DEFAULT_STREAM_VOLUME
+来电震动默认值
+DatabaseHelper.java
+int vibrateSetting = getIntValueFromSystem(db, Settings.System.VIBRATE_ON,
+					AudioManager.VIBRATE_SETTING_OFF);
+
+
+
+3.Charging sound 充电没有声音
+PowerManagerService.java
+//if (dockedOnWirelessCharger) { // alex delete for #194173
+mNotifier.onWirelessChargingStarted();
+//} // alex delete for #194173
+
+4去除setting中多余的语言　Language
+locale_config.xml
+
+5语言随sim卡变化 START
+159827  AOSP6582_L  getLocaleForLanguageCountry
+
+isSetLanguageBySIM()
+
+可如下修改: 取消从EF中获取的途径.
+SIMRecords.java中
+protected void onAllRecordsLoaded(){
+...
+setLocaleFromUsim(); //注释掉这行
+...
+} 
+
+AndroidRuntime.cpp
+static void readLocale(char* language, char* region)-->if (*propLang == 0 && *propRegn == 0) {
+关于sim语言处理在如下地方
+MccTable.java alps\frameworks\opt\telephony\src\java\com\android\internal\telephony
+public static void updateMccMncConfiguration(Context context, String mccmnc,
+boolean fromServiceState) {
+……
+Locale locale = null;
+if (mcc != 0) {
+setTimezoneFromMccIfNeeded(context, mcc);
+locale = getLocaleFromMcc(context, mcc);
+} 
+
+一路是获得IMSI后通过mcc mnc去更新语言,别一路是通过sim卡中的EF文件中保存的语言去更新
+
+
+6.飞行模式　蓝牙　wifi可以使用
+q3468_imobile/source/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+-    <string name="def_airplane_mode_radios" translatable="false">cell,bluetooth,wifi,nfc,wimax</string>
++    <string name="def_airplane_mode_radios" translatable="false">cell,bluetooth,nfc,wimax</string>
+
+
+
+7.恢复出厂设置或安装软件后，该位置模式应设置为“High Accuracy”
+RestoreRotationReceiver.java
+Settings.Secure.putInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_HIGH_ACCURACY);
+
+8.铃声”，“通知”，“闹铃”菜单中，应显示“更多”选项
+onPrepareRingtonePickerIntent
+// dw alex: [198625] add code @{	 	
+ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_MORE_RINGTONES, true);
+// @}
+
+9.开机重启后，播放音乐是，增加音量，不会出现警告
+AudioService.java
+private boolean  isFirstWaring = true;
+// @}
+private boolean checkSafeMediaVolume(int streamType, int index, int device) {
+	// dw alex: [197910] add code @{
+    if ((index < mSafeMediaVolumeIndex)&&(isFirstWaring == true)){
+		isFirstWaring = false;
+		setSafeMediaVolumeEnabled(true,"alex");  
+	}
+				
+10.设置-存储中显示总容量具体明细，且下面的所有容量加起来等于FLASH大小
+198124   0adc3c671919f9d4d8e272301cc1615e2dca9985
+MT6737_O_N　master
+
+
+11.热点接入点频段选项可在5GHz，应只有2.4GHz
+WifiApDialog.java
+// channelAdapter = ArrayAdapter.createFromResource(mContext,
+            //        R.array.wifi_ap_band_config_full, android.R.layout.simple_spinner_item);
+
+12.2G/3G/LTE
+198919 b0503d54c7a13c18c125d1341660b55bd1b7099d
+MT6737_O_N　master
+
+13.从user切换到guest数据连结自动关闭
+InitialJobsReceiver.java
+TelephonyManager.from(context).setDataEnabled(SystemProperties.get("ro.dewav.mobiledata").equals("1"));
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+1.实现双击 home 弹RecentAPP
+修改framework/base/core/res/res/values/config.xml中的
+ <integer name="config_doubleTapOnHomeBehavior">0</integer>
+改为：
+<integer name="config_doubleTapOnHomeBehavior">1</integer>
+
+2.关于如何让应用程序不显示在“最近使用”的列表中 
+android:excludeFromRecents="true"
+
+3.Home键点击两次，不应该打开最近的应用程序
+PhoneWindowManager.java
+//handleDoubleTapOnHome();
+
+4.最近任务，左右关闭apk，观察手机，有时候会关闭不了
+TaskStackViewTouchHandler.java
+//private static final float CHALLENGING_SWIPE_ESCAPE_VELOCITY = 800f; // dp/sec
+灵敏度
+
+
+5.没有后台进程的时候点击recent 不要显示 clear all
+MT6737_O_N　-b i6_b36_h61_custom 8099c0d6e76d12b4de01327969ac4bae7677c1e8
+
+6.recent task中Clear All应始终显示在底部
+MT6737_O_N　-b i6_b36_h61_custom 01300f2a05fe1f091347325812e1088bb27cceee
+
+7.保持RTL语言下的导航栏中按钮位置跟常规（ltr）一样
+FAQ20176
+
+8.如何修改navigationbar上按键的显示顺序
+在N上，由NavigationBarInflaterView负责NavigationBar的view生成。而下方按钮顺序是由config_navBarLayout来决定。
+默认顺序，从左往右为：back,home,recent。对应的配置值为：
+<string name="config_navBarLayout">space,back;home;recent,menu_ime</string>
+
+9.如何让通知不被清除或者点击后不消失？
+notification.flags |= Notification.FLAG_ONGOING_EVENT;
+或者
+notification.flags |= Notification.FLAG_NO_CLEAR;
+
+导航键宏
+CUSTOM_MAINKEY_SUPPORT
+
+qemu.hw.mainkeys

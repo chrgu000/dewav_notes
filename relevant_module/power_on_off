@@ -1,0 +1,18 @@
+1.关机动画播放不全就灭屏了
+ShutdownThread.java
+198608　0ff985346c6d10e60ade6c2c9423b7d02b2f082d
+MT6737_O_N　master
+
+2.开机重启后，播放音乐是，增加音量，不会出现警告
+checkSafeMediaVolume
+// dw alex: [197910] add code @{
+if ((index < mSafeMediaVolumeIndex)&&(isFirstWaring == true)){
+	isFirstWaring = false;
+	setSafeMediaVolumeEnabled(true,"alex");  
+}
+// @}
+
+
+3.充电提示音
+updateIsPoweredLocked－－＞ mNotifier.onWirelessChargingStarted();
+playWirelessChargingStartedSound

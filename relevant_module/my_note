@@ -1,0 +1,409 @@
+Window Share Places->Connect To Server（可以用这种方法来访问服务器文件，复制也可以）
+         172.16.20.2 sela.gao@dewav.com sela
+服务器    Applications->Internet->Terminal Server Client
+         IP： 172.16.19.239
+         帐号： rj-6
+         密码：qaz12345  
+sudo pkill iptux
+密码qaz12345
+//-----------git相关----------------------
+http://git.dewav.com/gerrit/
+如何拉代码：git clone ssh://git.dewav.com/A3468
+git clone gerrit2@172.16.20.66:/home/gerrit2/review_site/git/MT6737_O_N.git
+用git commit不能用git commit -m
+删除文件后可以用git reset --hard e2c49670a8c6494054dd4e637a92564a4f1771db
+
+    git reset --hard HEAD^
+    origin/HEAD
+
+    git reset --hard HEAD
+    git pull --rebase (如果提示某个文件有改动，可以用git checkout <path/filename>)
+    git stauts
+    git diff
+    git add modifyfiles
+    git add .(提交所有修改)
+    (git rm <path>)
+    git commit --amend (重新编辑记录信息)
+    git push origin HEAD:refs/for/master
+    git push origin I34_Custom:refs/for/I34_Custom      
+    网站提交 填写邮件／review／1，2／publish and submit
+git branch(列出本地所有的branch)/git branch -a(列出服务器所有的branch)
+git branch -D <branch name>  删除一个分支
+git checkout -b A34_B34_F34_Z34_Custom origin/A34_B34_F34_Z34_Custom  //建新的分支并切换到新分支上
+git checkout <branchname>切换到新的分支上
+git cherry-pick  [--continue]
+
+
+如果我们确定远程的分支正好是我们需要的，而本地的分支上的修改比较陈旧或者不正确，那么可以直接丢弃本地分支内容，运行如下命令
+git reset --hard origin/M34_E34_G34_H34_Custom
+
+如果是master分支：
+git reset --hard origin/HEAD
+我们常用 -p 选项 展开显示每次提交的内容差异，用 -2 则仅显示最近的两次更新：
+$ git log -p -2
+--author 仅显示指定作者相关的提交。
+$ git log  --author=haiwang
+git log --grep='dtor' mm/slab.c   在commit的message中查找关键字
+git log --since="2014-2-23" --before="2014-3-31"
+gitk 可视化界面
+qgit <path>
+git log --pretty=oneline <filename> 查看某一文件的log
+
+
+github时每次都要输入用户名和密码问题
+使用ssh方式
+git remote -v
+git remote rm origin
+git remote add origin git@github.com:sosout/myblog.git
+git push origin
+
+ssh-keygen -t rsa -C “email”,email是你注册在github上的邮箱。(指定路径)
+修改/home/alex/.ssh/config新加：
+Host github.com
+IdentityFile /home/alex/temp/.ssh/id_rsa
+User git
+chmod 700 id_rsa
+完成
+
+//------------git相关END-----------------------------
+
+
+
+//-----------编译相关----------------------
+X33 Qmobile编译
+./scm.sh X3365_DX33651_QMOBILE-A63_C416 X3365_QMOBILE-A63_416 Eng
+第一个编译命令
+./scm.sh A3476_DA34761_STARMOBILE-TURBO_C001 A3476_STARMOBILE-TURBO_C001 Eng
+./scm.sh F3458_DF34581_SOLONE_C001 F3458_SOLONE_C001 Eng
+./mk mm packages/apps/Contact 单独编译某一个模块
+./mk r 全部remake
+./mk r dr  <Launcher3> 编译整个android模块(编译Launcher3模块)
+make -j4 2>&1 | tee > make.log
+当你是单独编译时，需要将out目录下的东西拷贝到根目录下，需要运行cpbin.sh脚本，此脚本需要输入两个参数，第一个参数为mm,r的项目名
+第二个参数为根目录下new后生成的img存放文件夹名字，当然也可以另起一个名字做以区分。
+./cpbin.sh e3465(out下的名字) E3465_SYMPHONY_C001
+
+launcher3模块
+./mk mm external/protobuf/
+
+source build/envsetup.sh
+lunch full_u3468-eng
+LOCAL_DEX_PREOPT := false
+packages/apps/Gallery2/jni_refocus/Android.mk删除
+mmm package/app/Settings
+mmm -B packages/app/Settings | grep Install
+mmma  packages/app/Mms编译有依赖关系的
+camera底层编译
+mmm vendor/mediatek/proprietary/hardware/mtkcam/v1/common/paramsmgr/
+mmm  vendor/mediatek/proprietary/platform/mt6582/hardware/mtkcam/v1/common/paramsmgr/
+
+make -j8 systemimage 编译systemimage (8代表几核  grep -c 'model name' /proc/cpuinfo 可以用此命令查看)
+make -j8 snod  要先souce/lunch
+
+make -j24重新编译全部的image
+make clean-kernel 然后 make -j8 bootimage
+adb shell ps | grep launcher3
+adb shell kill 5265
+out/host/linux-x86/bin/  ./adb  disable-verity
+ - printconfig 显示当前 Build 的配置信息
+如果修改好自己的属性值之后，需要使用make update-api命令，然后需要将framework下的api中的current.text文件一并上传
+make  -j4   2>&1 | tee build.log
+make preloader -j4
+
+./prebuilts/misc/linux-x86/ccache/ccache  ./prebuilts/misc/linux-x86/ccache/ccache -M 50G
+vim ~/.bashrc
+export USE_CCACHE=1
+export CCACHE_DIR=/home/basil/Workspace/.ccache
+//-----------编译相关END----------------------
+
+
+//linux unix命令相关---------------------
+ll/ls -l
+ls   -l   | grep   "^-"[^d]   |   wc   -l   
+ ~/.android/avd/ -> 用 rm -fr *** 删你不要的东东即可。 
+查看进程
+ps -ef | grep notepad查看进程ps -A
+2feng@feng:~$ sudo kill 7082
+Ctrl + Shift + T 同一窗口打开另一命令窗口
+find  -name Alarm_Beep_01.ogg   (-iname不区分大小写)
+find   </etc> -name '*Settings*'查找包含'Settings'的文件
+files=`find $3 -type f`(只查找文件类型，目录和其他都过滤掉，然后赋值给files)
+shift+insert将鼠标选择的文字粘贴到光标所在处
+sudo -s进入root权限模式
+
+file lib库路径//确认apk是在多少位的环境下运行
+gnome-system-monitor查看内存使用情况
+ctrl+alt+f3
+top
+ctrl+alt+f7
+
+grep "PLATFORM_SECURITY_PATCH :=" build/core/version_defaults.mk | egrep [0-9]+
+脚本
+sleep 6h
+cd /home/alex/newdisk/MT6580_M/E3656_PRESTIGIO_MT6580_M/
+git reset --hard HEAD
+git clean -fd
+git pull --rebase 
+git checkout -b e36_d36_custom origin/e36_d36_custom
+git apply ~/alex.patch
+source build/envsetup.sh
+lunch full_e3656-userdebug
+make -j4 2>&1 | tee >> build-ci.log
+cp build-ci.log  ~/my
+
+linux添加开机自启动脚本
+/etc/rc.local中添加/opt/pjt_test/test.pl 添加rc.local的可执行权限　sudo chmod +x
+解决Linux关闭终端（关闭SSH等）后运行的程序或者服务自动停止nohup &
+
+ls -lR packages/ |grep "^d"|wc -l
+grep "^-"
+这里将长列表输出信息过滤一部分，只保留一般文件，如果只保留目录就是 ^d
+wc -l
+统计输出信息的行数，因为已经过滤得只剩一般文件了，所以统计结果就是一般文件信息的行数，又由于
+一行信息对应一个文件，所以也就是文件的个数。
+
+set -o(out) vi 命令行设定成了vi键位
+zip -r myfile.zip ./*
+将当前目录下的所有文件和文件夹全部压缩成myfile.zip文件,－r表示递归压缩子目录下所有文件.
+unzip -o -d /home/sunny myfile.zip
+把myfile.zip文件解压到 /home/sunny/
+-o:不提示的情况下覆盖文件；
+-d:-d /home/sunny 指明将文件解压缩到/home/sunny目录下；
+zip -d myfile.zip smart.txt
+删除压缩文件中smart.txt文件
+zip -m myfile.zip ./rpm_info.txt
+向压缩文件中myfile.zip中添加rpm_info.txt文件
+
+
+/************************vim基本操作 start************************************************************************/  
+文件(编辑文件)，Shift + ":"(退出对话框),q!退出不保存,wq保存退出
+vim显示行号:set number
+vim查找:
+a'查找第几行，在命令行中输入:number+enter就可以将光标移动到指定的行。
+b'查找某个字符串，在命令行中输入:/string  (/string查找指定字符串，n从开始向结束，即向下。N从结束向开始，即向上) 用\c忽略大小写
+/word_to_search\c
+c':set hls高亮查找的字符  / set nohls
+vim撤销:使用u就可以，恢复后又想删除，使用ctrl+r就可以。
+vim删除:  删除一个字符，使用x。  删除一行，使用dd； 删除n行，使用ndd；ctrl+v进入可视模式.dw是删除一个单词，包括后面的空格，de与dw类似，但是不包括空格
+vim删除所有:.,$d,ggdG,:%d
+vim复制:ctrl+v配合“上下左右”键，选中字符串，使用y进行复制。 复制一行:yy  复制n行:nyy
+vim粘贴:p
+vim中定位: 快速定位到当前光标所在变量或函数处: gd  gg     将光标移动到文件的开始位置。G或者shift+g  将光标移动到文件的最后一行。
+vim中的常用替换命令:
+:n,$s/vivian/sky/ 替换第 n 行开始到最后一行中每一行的第一个 vivian 为 sky
+:n,$s/vivian/sky/g 替换第 n 行开始到最后一行中每一行所有 vivian 为 sky
+(n 为数字，若 n 为 .，表示从当前行开始到最后一行)
+:%s/vivian/sky/g（等同于 ：g/vivian/s//sky/g） 替换每一行中所有 vivian 为 sky 
+:set ignorecase
+set cursorline
+更新文件:e＋回车 
+:vert diffsplit  + /home/alex 对比当前文件
+使用vim的比较模式打开两个文件：
+vim -d file1 file2
+或
+vimdiff file1 file2
+[c     跳到前一个不同点
+]c     跳到后一个不同点
+dp          将差异点的当前文档内容应用到另一文档（diff put）
+dg          将差异点的另一文档的内容拷贝到当前文档（diff get）
+diffupdate  Ctrl+w切换窗口   zo/zc打开关闭相同处
+退出　qa/Ctrl+z
+清空文件gg dG
+vim ~/.bashrc
+/************************vim基本操作 end************************************************************************/  
+
+
+/************************android studio基本操作 start************************************************************************/ 
+Ctrl+E，可以显示最近编辑的文件列表
+
+Ctrl + Shift + L 打开搜索栏
+
+Ctrl+N，可以快速打开类文件
+
+Ctrl + Shift + F7  高亮某个字窜
+
+Ctrl+P，可以显示参数信息
+
+Ctrl+/和Ctrl+Shift+/可以注释代码
+
+Ctrl+F12，可以显示当前文件的结构	
+Alt + Enter导入包
+自动import  file--settings--editor--general---auto import
+重命名  选中文件---refactor--rename file
+
+/************************android studio基本操作 end************************************************************************/ 
+
+grep -r -i "AAA" /home/alex/文档(后面带个.从表示当前目录搜索)
+$ grep ‘test’ d*
+显示所有以d开头的文件中包含 test的行。
+$ grep ‘test’ aa bb cc
+显示在aa，bb，cc文件中匹配test的行。
+
+touch xxx.txt ||  vi  xxx.txt
+
+sudo shutdown -h  180
+
+chmod -R 777  /etc/profile   
+chmod  -R a+rw  /../..
+
+sudo fdisk -l 查看分区
+dconf-editor
+用 find . -name '*.sql' |xargs rm -r 
+快捷命令
+vim  .bashrc
+alias open='nautilus'
+alias grepmk='grep -r --include=*.mk -n '
+alias grepxml='grep -r --include=*.xml -n '
+alias grepjava='grep -r --include=*.java -n '
+
+grep -r --include=*.{txt,h} DS .
+之后source ~/.bashrc
+sudo mkfs -t ext3 /dev/sdb    把/dev/sdb硬盘格式化为ext3形的
+sudo mount /dev/sdb  /media     挂载/dev/sdb硬盘到/media下～
+sudo umount /dev/sdb  /media    取消挂载在/media下的硬盘
+sudo hdparm -tT /dev/sdb  测试读写速度
+
+将某个服务器挂载到本机下面 密码scm
+sshfs jenkins@172.16.18.226:/home /home/alex/dwscm_226/
+fusermount -u mount_point［/home/alex/dwscm_226/］
+
+dconf-editor 
+apt-get purge qgit
+nautilus 直接进入后面路径所在的文件目录
+
+ctrl+d对比(qgit,先设置比较工具为compare)
+
+右键加入终端命令行
+sudo apt-get install nautilus-open-terminal
+nautilus -q
+teamviewer软件 远程控制
+//unix命令相关END---------------------
+
+////adb相关－－－－－－－－－－－－－－－
+sudo su -
+adb kill-server
+adb start-server
+adb remount
+sela@sela-desktop:~/sela$ adb push '/home/sela/sela/A3368/vendor/c3389_tecono/application/internal/golauncher_v1.2_svn28246_chuanyinkeji_x501_x503.apk'  ./system/app
+若出现
+failed to copy '/home/sela/sela/A3368/vendor/c3389_tecono/application/internal/golauncher_v1.2_svn28246_chuanyinkeji_x501_x503.apk' to './system/app/golauncher_v1.2_svn28246_chuanyinkeji_x501_x503.apk': Read-only file system
+则执行
+sela@sela-desktop:~/sela$ adb remount
+
+adb shell getprop <ro.product.model> 查看某一属性值
+adb shell setprop  "qemu.hw.mainkeys"  0  设置某一属性值
+adb shell wm size
+adb pull /sdcard/Pictures/Screenshots ./
+system/theme/white/
+adb shell df查看手机空间情况
+du -d 1 /data
+
+adb shell screencap -p /sdcard/hello.png   adb pull /sdcard/hello.png
+vim ~/.bashrc
+# For Android Device Screenshotfunction
+androidshot() {
+adb shell screencap -p /sdcard/$1.png && adb pull /sdcard/$1.png
+}
+source ~/.bashrc  androidshot hello
+adb shell "monkey -p com.mediatek.camera --throttle 500 -v 10000>/storage/sdcard0/monkey.log"
+adb shell am start -a android.intent.action.CALL tel:112 拨打电话
+
+adb命令发送短信
+am start -a android.intent.action.SENDTO -d sms:10086（发送目的号码） --es sms_body(短信内容)
+adb命令  启动Activity
+adb shell am start -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -n breakan.test/breakan.test.TestActivity
+或简单一些。
+adb shell am start -n breakan.test/breakan.test.TestActivity
+查看当前的activity
+adb shell dumpsys activity | grep "mFocusedActivity"
+////adb相关－－－－－－－－－－－－－－－
+
+
+//LOG相关---------------------------
+Log.i("alex ","key:"+key+"value=="+value.toString());
+Log.d(TAG, Log.getStackTraceString(new Throwable()));打印堆栈
+连上手机adb shell logcat -v time>11.log　然后开始操作
+adb shell logcat  | grep alex
+adb logcat *:E
+adb shell logcat -s "ActivityManager">111.log
+adb shell logcat -c
+andriod常用资料：https://app.yinxiang.com/pub/segonxing/04_android
+new Throwable().printStackTrace() ;
+关键字main_log
+Exception  Fatal  anr  crash   Caused by:    I am_crash:   I am_anr   AndroidRuntime
+GAT--->window--open logviewer     __exp_mian.txt SWT_JBT_TRACES do_wait (SourceFile:98)
+volte---ImsConfigManager RIL_CMD_READER
+user版本抓log
+L版本：
+请修改alps/vendor/mediatek/proprietary/external/xlog/tools/mtklog-config-user.prop文件中对应字段值：com.mediatek.log.<mobile/modem/net>.enable设置成true。 重新build版本后，需要format并download。 
+ android.util.Log.d("-segon-", android.util.Log.getStackTraceString(new Throwable()));打印堆栈
+//LOG相关END---------------------------
+
+
+//dewav 脚本相关－－－－－－－－－－－－－－－
+*#*#3646633#*#*
+*39*441#  内部版本号
+*#06#   imei
+//dewav 脚本相关 END－－－－－－－－－－－－－－－
+
+
+
+再发一次，目前好多同事都没有检查文件冲突
+
+PS: 无论checkClash.pl 放在哪里，参数请使用全路径
+
+正确： $ ./checkClash.pl /media/Work/A3368_Git/vendor/c3389_tecono
+
+错误： $ ./checkClash.pl A3368_Git/vendor/c3389_tecono
+
+错误： $ ./checkClash.pl vendor/c3389_tecono
+nautilus /home/alex/.dwCheckClash/
+
+
+系统变量
+String defaultBootRingtone = SystemProperties.get("persist.sys.boot.ringtone")+"";
+
+adb pull ./data/data/com.android.providers.settings/databases/settings.db .
+
+Launcher3数据库操作
+adb pull /data/data/com.android.launcher3/databases
+SQLiteSpy_1.9.6
+
+ssh jenkins@172.16.18.209登录服务器
+
+连接windows
+rdesktop 172.16.19.80 -u ruanjian7 -p ruanjian7 -f
+
+osd相关导出字符
+zip -r packages.zip packages/ -i *{string,array}*.xml
+修改文件时间
+touch 文件路径　-m -d "2014-08-28 19:46:01" 2014.08.28_19.22.55
+
+开关机动画压缩
+zip -0 -r bootanimation.zip ./  (-0不压缩内容)
+
+normal模式下的Selinux 的模式是否开启
+adb shell ---> getenforce
+
+字符窜操作
+String contentTitle2 = contentTitle.replace(" ","").replace("-","");
+string.length()
+string.substring(0, string.length() - 1)
+languageCode.equals("ar")
+String s1 = new String("hello"); 
+s1+="拼接字符串的时间";    
+s4.append("拼接字符串的时间"); 
+s3=s3.concat("拼接字符串的时间");    
+String.charAt() 
+Integer.toString(i)整形转string
+EditText value1 = (EditText)findViewById(R.id.value1);
+v1 = Integer.parseInt(value1.getText().toString());
+字符窜中是否存在某个字符/窜
+int i=s.indexOf("b");
+(str.contains("c")) 
+遍历 for each
+sb.append(Integer.toString(i).toCharArray());//string转StringBuilder
+
+查看log,mtk online,百度,看代码
+
+

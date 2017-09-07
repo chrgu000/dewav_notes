@@ -1,0 +1,14 @@
+1.连接PC，选择PTP 需要可以显示T卡
+MT6737_O_N　-b i6_b36_h61_custom
+cf418992b8b6f191d1467eeb244aee7a6dcf6932
+
+
+2.显示system data,available
+MT6737_O_N　-b master
+B7159_TecSync
+0adc3c671919f9d4d8e272301cc1615e2dca9985
+
+3.默认存储器
+所有对默认存储路径的设定最终都是透过MountService.java的setDefaultPath(String path)设定的，StorageManagerEx.java里面setDefaultPath(String path)以及getDefaultPath()是开放给App使用的。
+
+
