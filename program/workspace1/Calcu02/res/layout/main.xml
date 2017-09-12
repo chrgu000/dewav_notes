@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/widget0"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+>	
+	<EditText
+	android:id="@+id/c1"
+	android:text=""
+	android:layout_x="0px"
+	android:layout_y="27px" 
+	android:layout_width="fill_parent"
+	android:layout_height="80dip"
+	android:textColor="#FFFFFF" 
+	android:background="#000000" 
+	android:gravity="right" 
+	android:textSize="20px"
+	android:editable="false"
+	android:lines="2"
+	>
+	</EditText>
+	
+	<TableLayout
+	android:id ="@+id/TR00"
+	android:layout_width = "fill_parent"
+	android:layout_height = "wrap_content"
+	android:collapseColumns = "3"
+	android:stretchColumns = "1"
+	>
+		<TableRow
+		android:id = "@+id/TR00"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		>	
+			<Button
+			android:id = "@+id/BtnNone"
+			android:text = ""
+			android:layout_width = "240dip"
+			android:layout_height = "50dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "20sp"
+			android:background="@drawable/button1"
+			android:clickable="false"
+			>
+			</Button>            
+			
+			<Button
+			android:id = "@+id/BtnClr"
+			android:text = "CLEAR"
+			android:layout_width = "70dip"
+			android:layout_height = "50dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "20sp"
+			android:background="@drawable/button1"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+		</TableRow>
+	</TableLayout>
+
+	<TableLayout
+	android:id="@+id/TL01"
+	android:layout_width = "fill_parent"
+	android:layout_height = "fill_parent"
+	android:collapseColumns = "4"
+	android:stretchColumns = "4"
+	android:background="#000000" 
+	>
+		
+		<TableRow
+		android:id = "@+id/TR01"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		>
+			<Button
+			android:id = "@+id/Btn7"
+			android:text = "7"
+			android:layout_width = "80dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"	
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+							
+			<Button
+			android:id = "@+id/Btn8"
+			android:text = "8"
+			android:layout_width = "80dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/Btn9"
+			android:text = "9"
+			android:layout_width = "80dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/BtnDiv"
+			android:text = "/"
+			android:layout_width = "80dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button1"
+			>
+			</Button>
+		</TableRow>
+		
+		<TableRow
+		android:id = "@+id/TR02"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		>
+			<Button
+			android:id = "@+id/Btn4"
+			android:text = "4"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"	
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+							
+			<Button
+			android:id = "@+id/Btn5"
+			android:text = "5"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/Btn6"
+			android:text = "6"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			<Button
+			android:id = "@+id/BtnMul"
+			android:text = "*"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button1"
+			>
+			</Button>
+		</TableRow>
+		
+		<TableRow
+		android:id = "@+id/TR03"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		>
+			<Button
+			android:id = "@+id/Btn1"
+			android:text = "1"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			
+			>
+			</Button>
+							
+			<Button
+			android:id = "@+id/Btn2"
+			android:text = "2"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/Btn3"
+			android:text = "3"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			android:focusable="true" 
+			android:clickable="true"
+			>
+			</Button>
+			<Button
+			android:id = "@+id/BtnSub"
+			android:text = "-"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button1"
+			>
+			</Button>
+		</TableRow>
+		
+		<TableRow
+		android:id = "@+id/TR04"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		>
+			<Button
+			android:id = "@+id/BtnDot"
+			android:text = "."
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"	
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			>
+			</Button>
+							
+			<Button
+			android:id = "@+id/Btn0"
+			android:text = "0"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/BtnEqual"
+			android:text = "="
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button1"
+			>
+			</Button>
+			
+			<Button
+			android:id = "@+id/BtnAdd"
+			android:text = "+"
+			android:layout_width = "60dip"
+			android:layout_height = "70dip"
+			android:textColor="#FFFFFF" 
+			android:textSize = "40sp"
+			android:background="@drawable/button1"
+			>
+			</Button>
+		</TableRow>
+	
+	
+</TableLayout>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, client!</string>
+    <string name="app_name">IPCamera</string>
+    <string name="选择1">设备1</string>
+    <string name="选择2">设备2</string>
+    <string name="选择3">设备3</string>
+    <string name="选择4">设备4</string>
+    <string name="选择5">设备5</string>
+    <string name="选择6">设备6</string>
+</resources>

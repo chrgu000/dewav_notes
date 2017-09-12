@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:key="meats_category"
+        android:title="Meats"
+        android:summary="Preferences related to meats">
+        <CheckBoxPreference android:key="fish_selection_pref" 
+            android:title="Fish"
+            android:summary="Fish is Healthy"/>
+        <CheckBoxPreference android:key="chicken_selection_pref" 
+            android:title="Chicken"
+            android:summary="A common type of poultry"/>
+        <CheckBoxPreference android:key="lamb_selection_pref" 
+            android:title="Lamb"
+            android:summary="A young sheep"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="vegitable_category"
+        android:title="Vegetables"
+        android:summary="Preference related to Vegetables">
+        <CheckBoxPreference android:key="tomato_selection_pref" 
+            android:title="Tomato"
+            android:summary="It's actually a fruit."/>
+        <CheckBoxPreference android:key="potato_selection_pref" 
+            android:title="Potato"
+            android:summary="My favorite vegetable."/>
+    </PreferenceCategory>
+</PreferenceScreen>

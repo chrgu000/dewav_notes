@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Mys66blockActivity!</string>
+    <string name="app_name">Mys66block</string>
+
+        
+      <string name="no_service">No service</string>
+      
+      <string name="cmcc">CMCC</string>
+      <string name="unicom">UNICOM</string>
+      <string name="dianxin">CHINA TELECOM</string>
+    
+      <string name="unlock_success">Unlock success</string>   
+        <string name="charge_in">Charging</string> 
+        
+       <string name="lock_scr_ini">Initial lock screen successed.</string>      
+       
+       <string name="set_lockscreen_bg">Set lock screen background</string>      
+       <string name="activate_lockscreen_bg">Activate as lock screen background</string>        
+           
+</resources>

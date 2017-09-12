@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="First Sounds">
+        <CheckBoxPreference android:key="sound_checkbox_pref"
+            android:title="CheckBox 1"
+            android:summary="Our First Checkbox Preference"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Second Sounds">
+        <EditTextPreference android:key="sound_edit_pref"
+            android:title="EditText Preference"
+            android:summary="Here's an edittext preference"
+            android:dialogTitle="Title for EditText Dialog"/>
+        <ListPreference android:key="sound_list_pref"
+            android:title="Favorite Character"
+            android:summary="From Snow White and the Seven Dwarves"
+            android:entries="@array/entries"
+            android:entryValues="@array/values"
+            android:dialogTitle="Choose a Character"/>
+    </PreferenceCategory>
+    
+</PreferenceScreen>

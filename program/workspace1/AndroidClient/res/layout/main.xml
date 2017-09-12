@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@+id/AbsoluteLayout1" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:baselineAligned="true" android:orientation="vertical">
+    <ImageView android:src="@drawable/android" android:id="@+id/imageView1" android:layout_x="0px" android:layout_y="0px" android:layout_height="330px" android:layout_width="fill_parent"></ImageView>
+    <Button android:text="前" android:id="@+id/qian" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="500dip" android:layout_y="395dip"></Button>
+    <Button android:text="下" android:id="@+id/xia" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="53dip" android:layout_y="460dip"></Button>
+    <Button android:text="上" android:id="@+id/shang" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="53dip" android:layout_y="370dip"></Button>
+    <Button android:text="停" android:id="@+id/ting" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="53dip" android:layout_y="415dip"></Button>
+    <Button android:text="右" android:id="@+id/you" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="97dip" android:layout_y="415dip"></Button>
+    <Button android:text="IPCAMERA LIST" android:id="@+id/lianjie" android:layout_width="150px" android:textStyle="bold" android:layout_height="45px" android:layout_x="150dip" android:layout_y="370dip" android:visibility="gone"></Button>
+    <Button android:text="左" android:id="@+id/zuo" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="9dip" android:layout_y="415dip"></Button>
+    <Button android:text="后" android:id="@+id/hou" android:layout_width="45px" android:textStyle="bold" android:layout_height="45px" android:layout_x="500dip" android:layout_y="395dip"></Button>
+    <Button android:text="配置IPCAMERA" android:id="@+id/button1" android:layout_width="150px" android:layout_height="45px" android:layout_x="150dip" android:layout_y="415dip"></Button>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox01" android:layout_x="15dp" android:layout_y="302dp"></CheckBox>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox02" android:layout_x="65dp" android:layout_y="302dp"></CheckBox>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox03" android:layout_x="115dp" android:layout_y="302dp"></CheckBox>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox04" android:layout_x="165dp" android:layout_y="302dp"></CheckBox>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox05" android:layout_x="215dp" android:layout_y="302dp"></CheckBox>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/CheckBox06" android:layout_x="265dp" android:layout_y="302dp"></CheckBox>
+    <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/选择1" android:layout_x="16dp" android:layout_y="344dp"></TextView>
+    <TextView android:id="@+id/TextView01" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_x="68dp" android:layout_y="344dp" android:text="@string/选择2"></TextView>
+    <TextView android:id="@+id/TextView02" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_x="117dp" android:layout_y="344dp" android:text="@string/选择3"></TextView>
+    <TextView android:id="@+id/TextView03" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_x="166dp" android:layout_y="344dp" android:text="@string/选择4"></TextView>
+    <TextView android:id="@+id/TextView04" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_x="220dp" android:layout_y="344dp" android:text="@string/选择5"></TextView>
+    <TextView android:id="@+id/TextView05" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_x="270dp" android:layout_y="344dp" android:text="@string/选择6"></TextView>
+</AbsoluteLayout>

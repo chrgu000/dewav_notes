@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ProPreferences</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">"通过菜单，选择相应的例子：\n\n"
+        "例子1：list方式的基础小例子。本例使用API Level 11之前简单便捷的方式，用于了解Preferences的基础概念和用户体验。\n\n"
+        "例子2：Combox Preferences\n\n"
+        "例子3：EditText Preferences\n\n"
+        "例子4：复合Preferences，含有Ringtone Preferences例子，还有MultiSelect List Preferences例子\n\n"
+        "例子5：Category Preference\n\n"
+        "例子6：Child Preference\n\n"
+        "例子7：Header Preference，演示在Android 3.0后的代码，并提供代码编写preference的范例\n\n"
+        "代码写preference见MainActivity\n"</string>
+    
+    <string name="test_list_preferences">例子1：List Preferences Demo</string>
+    <string name="check_preferences">例子2：CheckBox Pref</string>
+    <string name="edit_preferences">例子3：EditText Pref</string>
+    <string name="complex_preferences">例子4：复合Pref</string>
+    <string name="category_preferences">例子5：Category Pref</string>
+    <string name="child_preferences">例子6：Child Pref</string>
+    <string name="header_preferences">例子7：Header Pref</string>
+    <string name="code_preferences">例子8：代码方式</string>
+    <string name="test_preferences">Test Demo</string>
+    
+    <string name="default_flight_option">1</string>
+    <string name="read_default_preferences">读缺省值</string>
+
+</resources>

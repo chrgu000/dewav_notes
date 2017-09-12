@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:title="Complex Preferences">
+    <ListPreference android:key="selected_flight_sort_option"
+        android:title="Flight Options"
+        android:summary="Set Search Options"
+        android:entries="@array/flight_sort_options"
+        android:entryValues="@array/flight_sort_options_values"
+        android:dialogTitle="Choose Flight Options"
+        android:defaultValue="@string/default_flight_option"/>
+    
+	    <PreferenceScreen android:key="flight_columns_pref"
+	    	android:title="Flight Search Prefereces"
+	    	android:summary="Set Columns for Search Results">
+		    <CheckBoxPreference android:key="show_airline_column_pref"
+		        android:title="AirLine"
+		        android:summaryOn="Show AirLine Column"
+		        android:summaryOff="Not Show AirLine Column" />
+		   	<CheckBoxPreference
+			    android:key="show_departure_column_pref"
+				android:title="Departure"
+				android:summary="Show Departure column" />
+			<CheckBoxPreference
+			    android:key="show_arrival_column_pref"
+				android:title="Arrival"
+				android:summary="Show Arrival column" />
+			<CheckBoxPreference
+			    android:key="show_total_travel_time_column_pref"
+				android:title="Total Travel Time" 
+				android:summary="Show Total Travel Time column" />
+			<CheckBoxPreference
+			    android:key="show_price_column_pref"
+				android:title="Price" 
+				android:summary="Show Price column" />	
+	</PreferenceScreen>	     
+	
+	<PreferenceScreen  android:key="packet_name"
+	    android:title="Package Name">
+		<EditTextPreference android:key="package_name_pref"
+		    android:title="Set Package Name"
+		    android:summary="Set the Package Name"
+		    android:dialogTitle="Package Name:" />	
+	</PreferenceScreen>    
+
+	<PreferenceScreen android:key="ringtone_option"
+	    android:title="Ring Tones"
+	    android:summary="Set Ring Tones Preferences">
+		<RingtonePreference android:key="ringtone_pre"
+		    android:title="Set RingTone Preferences"
+		    android:summary="Set RingTone"
+		    android:showSilent="true"
+		    android:ringtoneType="ringtone"/>
+	</PreferenceScreen>
+	
+	
+	<PreferenceScreen android:key="multi_select_test"
+	    android:title="MultiSelect List Preference"
+	    android:summary="Test for Multiselect List Preferences">
+		<MultiSelectListPreference android:key="fruits"
+		    android:title="Select Your Favourite Fruits"
+		    android:summary="选择您喜欢的水果"
+		    android:entries="@array/fruit"
+		    android:entryValues="@array/fruit_index"
+		    android:dialogTitle="水果："
+		    />
+		
+	</PreferenceScreen>
+
+</PreferenceScreen>

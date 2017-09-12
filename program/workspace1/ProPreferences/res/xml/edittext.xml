@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:key="packet_name"
+    android:title="Package Name">
+	<EditTextPreference android:key="package_name_pref"
+	    android:title="Set Package Name"
+	    android:summary="Set the Package Name"
+	    android:dialogTitle="Package Name:" 
+	    />
+</PreferenceScreen>

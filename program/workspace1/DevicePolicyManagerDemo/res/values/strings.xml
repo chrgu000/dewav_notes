@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, DevicePolicyManagerDemoActivity!</string>
+    <string name="app_name">DevicePolicyManagerDemo</string>
+    <string name="labelValue">隐式意图跳过来的权限提醒页面</string>
+    <string name="description">This is Description for Receiver</string>
+
+</resources>

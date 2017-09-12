@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    　    <TextView android:layout_width="fill_parent"
+android:layout_height="wrap_content" 
+android:text="请输入电话号码" />
+    　    
+<EditText android:layout_width="fill_parent"
+ android:layout_height="wrap_content" 
+android:id="@+id/phone" />
+<Button android:layout_width="wrap_content"
+android:layout_height="wrap_content" 
+android:text="拔打此号码"
+android:id="@+id/button" />
+
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, galleryImage!</string>
+    <string name="app_name">Gallery</string>
+    <string name="my_gallery">my gallery</string>
+    <string name="my_gallery_text">my gallery_text</string>
+</resources>

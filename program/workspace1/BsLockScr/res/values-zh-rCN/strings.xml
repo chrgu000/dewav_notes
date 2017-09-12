@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Mys66blockActivity!</string>
+    <string name="app_name">Mys66block</string>
+
+        
+      <string name="no_service">无服务</string>
+      
+      <string name="cmcc">中国移动</string>
+      <string name="unicom">中国联通</string>
+      <string name="dianxin">中国电信</string>
+    
+      <string name="unlock_success">解锁成功</string>   
+        <string name="charge_in">正在充电</string> 
+        
+         <string name="lock_scr_ini">锁屏模块加载成功</string>       
+         
+        <string name="set_lockscreen_bg">设置锁屏背景</string>      
+        <string name="activate_lockscreen_bg">设为锁屏背景</string>    
+</resources>

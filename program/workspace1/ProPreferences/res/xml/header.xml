@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+	<header android:fragment="cn.wei.flowingflying.propreferences.HeadPreferenceActivity$Pref1Fragment" 
+	    android:icon="@drawable/creep"
+	    android:title="Sound"
+	    android:summary="These are sound preferences" />
+	
+	<header android:fragment="cn.wei.flowingflying.propreferences.HeadPreferenceActivity$Pref2Fragment" 
+	    android:icon="@drawable/creep003"
+	    android:title="Complex"
+	    android:summary="These are complex preferences" >
+	     <extra android:name="someKey" android:value="someHeaderValue" />
+	</header>
+	
+	<header android:fragment="cn.wei.flowingflying.propreferences.ListPreferenceFragment" 
+	    android:icon="@drawable/creep004"
+	    android:title="List Preferences"
+	    android:summary="Code for list entries" >
+	    <extra android:name="testCase" android:value="codeForListEntries" />
+	</header>
+	<header android:fragment="cn.wei.flowingflying.propreferences.ListPreferenceFragment" 
+	    android:icon="@drawable/creep004"
+	    android:title="List Preferences"
+	    android:summary="Code for list preference" >
+	    <extra android:name="testCase" android:value="codeForAll" />
+	</header>	    
+
+	
+	<header android:icon="@drawable/ic_launcher"
+            android:title="Intent"
+            android:summary="Launches an Intent.">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.android.com" />
+    </header>
+	
+</preference-headers>
