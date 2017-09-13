@@ -1,0 +1,104 @@
+
+使用过Android的同学，尤其是用过山寨pad，应该对Android的重启问题印象深刻吧。Android由于其设计的复杂性，可能会使得系统在不经意时陷入异常状态，因此Android设计了一套看门狗机制，当检测到问题后，自动重启。
+
+再说说我碰到的问题吧，刚带起Android的时候，android的重启问题异常严重，经常操作一会后，界面卡住，等待1分钟左右，重启…， trace大约如下：
+
+W/Watchdog(  813): *** WATCHDOG KILLING SYSTEM PROCESS: com.android.server.am.ActivityManagerService
+W/AudioFlinger(  745): power manager service died !!!
+I/ServiceManager(  737): service 'input_method' died
+I/ServiceManager(  737): service 'textservices' died
+I/ServiceManager(  737): service 'uimode' died
+I/ServiceManager(  737): service 'vibrator' died
+I/ServiceManager(  737): service 'battery' died
+I/ServiceManager(  737): service 'permission' died
+I/ServiceManager(  737): service 'cpuinfo' died
+
+从这个trace上看，问题是出在ActivityManangerService中，但是什么问题呢？继续追踪watchDog的重启机制，可以看到，其实现机制就是通过探测系统中各个service的锁是否正常来实现的(详情不细述，想了解的可以看看邓凡平的《深入理解Android:卷1》，这本书相当不错)，当有死锁情况时，会杀掉system server进程以致android framework重启而让系统继续工作。
+
+这个问题，一开始也让我困惑半天，无从下手，Android由于其复杂的架构和巨量的源码，啃起来还是蛮痛苦的。好在android提供的调试方法和工具，还算比较完备，从log中发现，其在watch dog退出之前，生成了anr的trace，那就从这个地方分析吧。
+
+刚拿到anr的trace，还是无头绪，都是调用栈的dump，仔细看看，发现一个很好的信息隐藏在这个栈帧信息中：
+如下一个栈帧：
+
+----- pid 861 at 2012-02-11 14:57:50 -----
+Cmd line: system_server
+
+DALVIK THREADS:
+(mutexes: tll=0 tsl=0 tscl=0 ghl=0)
+"main" prio=5 tid=1 MONITOR
+  | group="main" sCount=1 dsCount=0 obj=0x2ba9c460 self=0x8e820
+  | sysTid=861 nice=0 sched=0/0 cgrp=[fopen-error:2] handle=716342112
+  | schedstat=( 0 0 0 ) utm=464 stm=65 core=0
+  at com.android.server.am.ActivityManagerService.isUserAMonkey(ActivityManagerService.java:~6546)
+  - waiting to lock <0x2c1141c8> (a com.android.server.am.ActivityManagerService) held by tid=59 (Binder Thread #6)
+  at android.app.ActivityManagerNative.onTransact(ActivityManagerNative.java:1273)
+  at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:1545)
+  at android.os.Binder.execTransact(Binder.java:338)
+  at com.android.server.SystemServer.init1(Native Method)
+  at com.android.server.SystemServer.main(SystemServer.java:808)
+  at java.lang.reflect.Method.invokeNative(Native Method)
+  at java.lang.reflect.Method.invoke(Method.java:511)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:784)
+  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:551)
+  at dalvik.system.NativeStart.main(Native Method)
+
+这说明什么？看上面的红色部分，说明这个主线程在等待锁一个object 0x2c1141c8 (通常就是synchronized操作，这里就是com.android.server.am.ActivityManagerService类型的一个object),但被tid=59占住了， 再看看 tid=59的栈帧：
+
+"Binder Thread #6" prio=5 tid=59 MONITOR
+  | group="main" sCount=1 dsCount=0 obj=0x2c3bd838 self=0x34c5d8
+  | sysTid=1120 nice=0 sched=0/0 cgrp=[fopen-error:2] handle=3460688
+  | schedstat=( 0 0 0 ) utm=168 stm=48 core=0
+  at com.android.server.am.BatteryStatsService.noteStopWakelock(BatteryStatsService.java:~114)
+  - waiting to lock <0x2c117d50> (a com.android.internal.os.BatteryStatsImpl) held by tid=13 (ProcessStats)
+  at com.android.server.PowerManagerService.noteStopWakeLocked(PowerManagerService.java:798)
+  at com.android.server.PowerManagerService.releaseWakeLockLocked(PowerManagerService.java:1015)
+  at com.android.server.PowerManagerService.releaseWakeLock(PowerManagerService.java:967)
+  at android.os.PowerManager$WakeLock.release(PowerManager.java:319)
+  at android.os.PowerManager$WakeLock.release(PowerManager.java:300)
+  at com.android.server.am.ActivityStack.activityIdleInternal(ActivityStack.java:3254)
+  at com.android.server.am.ActivityManagerService.activityIdle(ActivityManagerService.java:3953)
+  at android.app.ActivityManagerNative.onTransact(ActivityManagerNative.java:362)
+  at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:1545)
+  at android.os.Binder.execTransact(Binder.java:338)
+  at dalvik.system.NativeStart.run(Native Method)
+
+tid为何没有释放锁object 0x2c1141c8呢？因为它在等到锁 object 0x2c117d50(一个com.android.internal.os.BatteryStatsImpl类型的对象)!如果大家有较丰富的捉虫经验的话，看到这， 想必都清楚了，持锁时又请求锁，极大的可能就是死锁了！
+
+再看请求的锁被tid=13持有的情况吧：
+
+"ProcessStats" prio=5 tid=13 MONITOR
+  | group="main" sCount=1 dsCount=0 obj=0x2c146f58 self=0x2954f0
+  | sysTid=877 nice=0 sched=0/0 cgrp=[fopen-error:2] handle=2709096
+  | schedstat=( 0 0 0 ) utm=6 stm=4 core=0
+  at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:~12430)
+  - waiting to lock <0x2c1141c8> (a com.android.server.am.ActivityManagerService) held by tid=59 (Binder Thread #6)
+  at android.app.ContextImpl.sendBroadcast(ContextImpl.java:909)
+  at com.android.server.DropBoxManagerService.add(DropBoxManagerService.java:236)
+  at android.os.DropBoxManager.addText(DropBoxManager.java:272)
+  at com.android.server.am.ActivityManagerService$11.run(ActivityManagerService.java:7630)
+  at com.android.server.am.ActivityManagerService.addErrorToDropBox(ActivityManagerService.java:7635)
+  at com.android.server.am.ActivityManagerService.handleApplicationWtf(ActivityManagerService.java:7448)
+  at com.android.internal.os.RuntimeInit.wtf(RuntimeInit.java:345)
+  at android.util.Log$1.onTerribleFailure(Log.java:103)
+  at android.util.Log.wtf(Log.java:278)
+  at com.android.internal.os.BatteryStatsImpl.getNetworkStatsDetailGroupedByUid(BatteryStatsImpl.java:5738)
+  at com.android.internal.os.BatteryStatsImpl.access$100(BatteryStatsImpl.java:76)
+  at com.android.internal.os.BatteryStatsImpl$Uid.computeCurrentTcpBytesReceived(BatteryStatsImpl.java:2457)
+  at com.android.internal.os.BatteryStatsImpl$Uid.getTcpBytesReceived(BatteryStatsImpl.java:2446)
+  at com.android.internal.os.BatteryStatsImpl.writeSummaryToParcel(BatteryStatsImpl.java:5437)
+  at com.android.internal.os.BatteryStatsImpl.writeLocked(BatteryStatsImpl.java:4836)
+  at com.android.internal.os.BatteryStatsImpl.writeAsyncLocked(BatteryStatsImpl.java:4818)
+  at com.android.server.am.ActivityManagerService.updateCpuStatsNow(ActivityManagerService.java:1649)
+  at com.android.server.am.ActivityManagerService$3.run(ActivityManagerService.java:1531)
+
+OK，这里又是持锁请求锁，请求的锁被tid=59占住了！这里就是tid=59和tid=13之间死锁了！
+
+问题这里已经找到了，如何修复呢？其实，问题的原因也不复杂，仔细分析下出错的栈，可以找到规律，出错时都是系统在使用Log.wtf() 记录错误时引起的。Wtf是what a terrible failure的简称，说明系统遇到严重错误了。通过此问题，追踪下来是kernel的版本太低，不支持netfilter引起的。
+
+不过，这说明不了是android的bug，但仔细看看： Log.wtf最终会 在addErrorToDropBox 中调用com.android.server.am.ActivityManagerService.broadcastIntent，这是需要锁com.android.server.am.ActivityManagerService这个对象的，如果写代码的(包括android和后继开发者)不小心，随便在一些地方捕获异常来个Log.wtf，就会造成系统重启，而且本意想要的add dropbox的功能此时也是无法正常实现，看来android在设计和测试这个功能时，也是没严肃对待。
+
+解决方法： 要么认真的解决掉wtf，要么简单的注释掉 ActivityManagerService.java 的方法handleApplicationWtf中的addErrorToDropBox。本来就是工作的不好，而且只是生成调试信息，对产品意义不太大。
+
+另外要说明的是：这里只是造成重启问题的一个原因。android由于是开源的，大家都会改或添加代码，对这里面的锁操作稍有不慎就会使得系统出现重启问题，据我调试过的严重问题的经验来看，大约有八成以上都是此类 多线程同步/状态机 问题引起的。
+
+Android重启的一个主要原因就是这里所说的：系统monitor的锁被死锁或持锁时间过长导致的。本文只说了一个android公共的问题，实际开发时，由于客制化及硬件问题(比如GPU)引起的死锁和持锁时间过长导致重启的BUG有很多，都是可以通过此方法发现并进一步找方法解决，好好稳定一下系统，现在android的重启问题还是被抱怨的很惨。
