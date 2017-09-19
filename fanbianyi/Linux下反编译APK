@@ -1,0 +1,22 @@
+将apk文件解压后有两部分文件需要处理，一种是xml文件，另一种一个dex文件（.dex），我们可以从.dex文件中得到.class，利用后者再得到大家垂涎已久的java文件。
+
+工具准备
+----------------
+1. 解压apktool1.5.0.tar.bz2和apktool-install-linux-r04-brut1.tar.bz2，将这两个压缩包解压出来的3个文件拷贝到同一文件夹下，文件夹名随意
+2. 解压dex2jar-0.0.9.12-a.zip，解压后即可使用
+3. 解压jd-gui-0.3.5.linux.i686.tar.gz，解压后即可使用
+
+反编译步骤
+----------------
+1. 得到xml文件
+    用CD命令进入到apktool1.5.0文件夹
+    $ ./apktool d xxx.apk test    反编译 xxx.apk到文件夹test
+    $ ./apktool b xxx             从文件夹xxx重建APK，输出到ABC\dist\out.apk
+    
+2. 处理dex文件
+    把apk的后缀名改成zip，并解压得到classes.dex文件，将classes.dex文件拷贝到dex2jar工具所在目录
+    在dex2jar目录中输入如下命令得到classes-dex2jar.jar文件：
+    $ ./d2j-dex2jar.sh classes.dex
+    
+3. 得到Java文件
+    用jd-gui打开步骤2生成的classes-dex2jar.jar文件即可看到Java代码
