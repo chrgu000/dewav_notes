@@ -1,0 +1,117 @@
+SVN   
+Alex  123
+
+ÓÊÏä 
+alex.xiao@dewav.com   xzx141592    mail.dewav.com
+
+bugfree 
+alex.xiao  123
+
+mtk online  
+http://online.mediatek.com/_layouts/LnCApp/ECMLogin.aspx?ReturnUrl=%2fPages%2fdefault.aspx
+kevin.zhang@dewav.com    400jOLRZ 
+
+e-service
+http://eportal.mediatek.com/irj/portal
+UserID: LANNY_ZUO  Password: lun33
+ONCE dewav82
+
+UserID:  Ian_Xu_Dewav
+Password£º xy19840806
+
+OA
+http://172.16.20.9:8080/seeyon/index.jsp
+alex.xiao 123456
+
+Žò¿šŒÇÂŒ
+http://172.16.20.13:8080/cardsearch/
+Alex.xiao   V6XzXH 
+
+¹€×÷Ìš
+http://rdm.dewav.com/redmine/projects
+alex.xiao  alex.xiao
+
+Jenkins
+http://172.16.20.67:8888/login?from=%2F
+alex.xiao  alex.xiao
+
+PDFÃÜÂë
+1363581559
+3641691389
+
+
+vpn3  dewav2016   vpn2 www12345 test5 123qweasd
+xufang5872@gmail.com  xu123456fang
+facebook:carol.miao@dewav.com  m123456
+mebel.xu@gmail.com  mebel.xu123
+xiaozhangxin0607@gmail.com  xzx141592
+deepzhouqin@gmail.com    deepzhouqin
+git/windows服务器   YETTA
+
+server:172.16.20.14
+Folder:/[第三方资源][软件版本]
+Domain name:dewav
+user name:dewav.com/alex.xiao
+password:alex
+
+
+172.16.19.211  255.255.255.0  172.16.19.1
+172.16.20.2
+172.16.20.3
+172.16.19.238开发服务器　alex
+172.16.18.
+172.16.16. (214是217)
+VOICE_CALL_SIM_SETTING
+手机号码:15000540142服务密码915628
+15618027950    428j
+18516656314
+ssh jenkins@172.16.18.209
+
+座机分机300
+google帐号
+carolmiao123   密码miao123456
+
+
+软七路由器如下：
+普通测试用：
+S7     12345671   (隐藏的，需手动添加)
+rj7-vpn  w12345678 
+带VPN：
+Vpn-soft7  www12345
+930718
+vpn3  dewav201603
+fex
+https://fex.mediatek.com/LoginWebUser.aspx?ReturnUrl=%2fDownloadFiles.aspx%3fDownloadId%3dRT5qNUQ&DownloadId=RT5qNUQ
+fex.mediatek.com
+fes id :dewav-8
+fes pw:dewav-8
+TEST-5 123qweasd
+android技术讨论
+http://139.196.53.182
+展讯其他接口网址：
+1.CS系统——展讯正式文件的发布途径
+    地址：http://cs.spreadtrum.com
+    帐号：DewavSH
+    密码：a7zd71
+
+2.FTP——双方非正式文件的上传下载途径
+    地址：ftp.spreadtrum.com
+    帐号：dewavSH
+    密码：W8m3DSPT
+
+3.iSupport系统 ——patch下载管理，项目管理，FAQ，公告，评审，替代料等
+    地址：https://isupport.spreadtrum.com/iSupport/apply/login
+    账户：DewavSH (注意大小写)
+    密码：DEwavsh123（注意大小写）
+          
+
+4.CQ系统
+    http://222.66.158.139:2008/cqweb/login
+    账号：dewavsh
+    密码：dewavsh++
+
+
+DCC CANDY finny
+
+AOSP6582_L　　E3568　L_MT6753　M_MT6737_MP　MT6580_M　　MT6737_O_N　　MT6750_O_N 
+
