@@ -120,7 +120,7 @@ gnome-system-monitor查看内存使用情况
 ctrl+alt+f3
 top
 ctrl+alt+f7
-
+nmap localhost  查看端口使用情况
 grep "PLATFORM_SECURITY_PATCH :=" build/core/version_defaults.mk | egrep [0-9]+
 脚本
 sleep 6h
@@ -147,9 +147,24 @@ wc -l
 一行信息对应一个文件，所以也就是文件的个数。
 
 set -o(out) vi 命令行设定成了vi键位
+创建用户
+adduser： 会自动为创建的用户指定主目录、系统shell版本，会在创建时输入用户密码。
 
+useradd：需要使用参数选项指定上述基本设置，如果不使用任何参数，则创建的用户无密码、无主目录、没有指定shell版本。
+删除用户 userdel
 
+su root  切换用户
 
+PU info/内核的版本
+cat /proc/cpuinfo   
+cat /proc/version
+
+关机，重启，注销
+sudo shutdown -h now
+sudo reboot
+logout
+
+cp -r复制
 /************************vim基本操作 start************************************************************************/  
 文件(编辑文件)，Shift + ":"(退出对话框),q!退出不保存,wq保存退出
 vim显示行号:set number
