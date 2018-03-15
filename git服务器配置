@@ -1,0 +1,157 @@
+nux下搭建自己的Git服务器，弄了半天终于搞定了，还是记录下吧，不然下次有得忘了。
+流程：
+
+服务器
+
+    构建git目录
+        git用户，git组作为仓库管理
+        ssh授权（远程无需密码接入）
+        hook（post-receive）自动部署代码到网站目录
+
+    网站目录
+        准备接代码就行啦
+
+客户端
+
+    建立开发目录
+    ssh连接key生成
+    git操作。。。
+
+开始实作吧！
+
+先是git源码编译
+
+https://www.kernel.org/pub/software/scm/git/
+
+下载最新版本git(.gz)到/usr/local
+
+安装
+
+tar -zxf git-2.2.1.tar.gz 
+cd git.2.2.1
+make prefix=/usr/local/git all
+make prefix=/usr/local/git install
+
+    源码编译是不如 yum install git-all 方便，但是版本可以更新点，笔者用的阿里CentOS6.5，对应的git版本只能到1.7.2
+
+自己装的git没有在系统PATH环境里，用修改 /etc/profile 的方法手动贴入
+
+vim /etc/profile
+#找到 PATH=/usr/local/php/bin:$PATH 这行修改为
+PATH=/usr/local/php/bin:/usr/local/git/bin:$PATH
+#保存，退出shell重新连接就生效了
+
+git仓库
+
+groupadd git
+useradd git -g git
+cd /home/git
+mkdir repo.git #名字自定义
+cd repo.git
+git init --bare #生成裸仓库，存放除代码的版本信息
+chown -R git:git /home/git/repo.git
+
+这里有一点要注意，网上有为安全考虑，只为git用户的ssh连接启用git-shell，源码安装需如下操作
+
+#修改/etc/passwd
+vim /etc/passwd
+#找到git的用户设置 如：
+git:x:502:503::/home/newbmiao:/bin/bash #将最后一个执行文件路径改为
+git:x:502:503::/home/git:/usr/local/git/bin/git-shell #在安装包bin目录下
+#要启用还需源码报的git-shell命令交互
+cp /usr/local/git-2.2.1/contrib/git-shell-commands /home/git/
+#这样用户用git账户ssh连接后只能使用git命令了
+
+ssh免密码验证连接
+
+su git #切换git身份
+cd /home/git/
+ssh-keygen -C 'your@email.com' -t rsa #为你生成rsa密钥，可以直接一路回车，执行默认操作
+
+客户端生成密要方式同上。
+生成密钥后，会出现
+
+.ssh
+├── id_rsa
+└── id_rsa.pub #公钥 服务端需要里边内容验证连接着身份
+
+在客户端上，打开 id_rsa.pub 复制里边内容
+
+vim /home/git/.ssh/authorized_keys
+#粘贴客户端生成的公钥，保存退出
+#然后要启动sshd和git-daemon
+/etc/init.d/git-daemon restart 
+#上边git-daemon在安装目录下/usr/local/git/libexec/git-core/git-daemon,直接复制过去就行
+/etc/init.d/sshd start
+
+这样服务端的git仓库就搭好了
+
+客户端 git开发
+
+在客户端（笔者的是window的git bash）git操作提交试试
+
+#进入一个空的工作目录
+git init #初始化git
+vim test
+#编辑些内容保存退出
+git add test #添加到git缓存中
+git commit -m 'init test' #提交修改
+#添加远程git仓库
+git remote add origin git@your_host_name:/home/git/repo.git
+git push origin master #这样就同步到服务器了
+
+其他人要同步
+
+#克隆和推送：
+git clone git@your_host_name:/home/git/repo.git
+cd repo
+vim README
+git commit -am 'fix for the README file'
+git push origin master
+
+代码同步（HOOK）
+上边git用于做了中心的版本控制
+但是还想让服务器接到修改更新后自动同步代码到网站目录中，便于测试开发
+如下操作是可以实现
+
+#假定网站目录在/www/web下
+cd /home/git/repo.git/hooks
+vim post-receive #创建一个钩子
+#写入下面内容
+GIT_WORK_TREE=/www/web  git checkout -f
+#保存退出
+chown git:git post-receive
+chmod +x post-receive
+
+如此，下次提交修改，代码会自动同步到指定目录中
+
+    不过开始时笔者还是遇到一个问题解决不了，就是ssh公钥交给服务器，也启动git-daemon和sshd后，客户端 git clone 时居然还要密码，而且输入密码后提示 Permission denied, please try again.
+
+    后边却又离奇的可以了,可能是权限更改，不知道为什么，尤其是ssh怎么免密连接过程
+
+    大家有了解的告我一下，原理还没搞明白。
+
+GitHub 教程系列文章： 
+
+GitHub 使用教程图文详解  http://www.linuxidc.com/Linux/2014-09/106230.htm 
+
+Git 标签管理详解 http://www.linuxidc.com/Linux/2014-09/106231.htm 
+
+Git 分支管理详解 http://www.linuxidc.com/Linux/2014-09/106232.htm 
+
+Git 远程仓库详解 http://www.linuxidc.com/Linux/2014-09/106233.htm 
+
+Git 本地仓库（Repository）详解 http://www.linuxidc.com/Linux/2014-09/106234.htm 
+
+Git 服务器搭建与客户端安装  http://www.linuxidc.com/Linux/2014-05/101830.htm 
+
+Git 概述 http://www.linuxidc.com/Linux/2014-05/101829.htm 
+
+分享实用的GitHub 使用教程 http://www.linuxidc.com/Linux/2014-04/100556.htm 
+
+Ubuntu下Git服务器的搭建与使用指南  http://www.linuxidc.com/Linux/2015-07/120617.htm
+
+Git 的详细介绍：请点这里
+Git 的下载地址：请点这里
+
+本文永久更新链接地址：http://www.linuxidc.com/Linux/2015-09/123670.htm
