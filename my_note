@@ -429,3 +429,9 @@ sb.append(Integer.toString(i).toCharArray());//string转StringBuilder
 
 
 Format Junkie
+
+
+iptux和飞秋通信
+iptux的setting--preferences--system下：
+Candidate network coding:gb 18030,big5
+Preference network coding cp936
