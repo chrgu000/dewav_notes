@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/line">
+
+    <TextView
+        android:id="@+id/create_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="2017-08-05"
+        android:textColor="@color/tx_4"
+        android:gravity="center"
+        android:background="@drawable/setbar_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="138dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/bg_white">
+
+        <TextView
+            android:id="@+id/msg_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="10dp"
+            android:text="派送中"
+            android:textColor="@color/tx_1"
+            android:textSize="15sp" />
+
+
+        <ImageView
+            android:id="@+id/img_order"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_below="@+id/msg_desc"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/order_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/msg_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@+id/img_order"
+            android:text="铜质弯头 铜质水管弯头 铜质弯头 铜质水管弯头"
+            android:textColor="@color/gray_30"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/order_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_goods_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@+id/img_order"
+            android:text="运单号：201609131347456"
+            android:textColor="@color/gray_200" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
