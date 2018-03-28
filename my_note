@@ -360,6 +360,7 @@ adb pull /data/data/com.android.launcher3/databases
 SQLiteSpy_1.9.6
 
 ssh jenkins@172.16.18.209登录服务器
+scp root@106.14.168.155:/home/shifuhelpdata/file1  ./
 
 连接windows
 rdesktop 172.16.19.80 -u ruanjian7 -p ruanjian7 -f
