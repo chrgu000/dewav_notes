@@ -1,0 +1,47 @@
+/**************************************后台代码 START**********************************/
+WebStorm编译后台代码，进入根目录
+npm install webpack -g  依赖
+Unknown plugin "component" specified -->npm install babel-plugin-component -D
+(npm install)
+进入ai_kang_shui_dian_manager
+npm run build 
+
+编译成功后将
+ai_kang_shui_dian_manager/dist/manager/
+ai_kang_shui_dian_manager/dist/manager_index.html
+复制到服务器根目录/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian
+/**************************************后台代码 END**********************************/
+
+/**************************************java代码 START**********************************/
+idea编译java代码
+进入ai_kang_shui_dian
+在Application.java右键run Application
+Run Application
+编译成功后将
+ai_kang_shui_dian/target/classes/com
+ai_kang_shui_dian/target/classes/mapper
+复制到服务器
+/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian/WEB-INF/classes/下
+重新编译要先stop application
+/**************************************前端代码 END**********************************/
+
+/**************************************Android代码 START**********************************/
+android端生成apk   Build--Generate signed APK
+shifuhelp/aksd.jks
+build.gradle
+keyAlias 'key0'
+keyPassword 'zhengan88'
+/**************************************Android代码 END**********************************/
+
+
+/**************************************微信端代码 START**********************************/
+微信端
+(npm install)
+npm run build
+生成的dist
+文件夹下的b-app/    indexB.html 覆盖服务器
+/**************************************微信端代码 END**********************************/
+
+服务器
+106.14.168.155：22
+root  Akan100years
