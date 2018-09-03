@@ -1,4 +1,4 @@
-SVN   
+﻿SVN   
 Alex  123
 
 ÓÊÏä 
@@ -39,7 +39,6 @@ PDFÃÜÂë
 1363581559
 3641691389
 
-
 vpn3  dewav2016   vpn2 www12345 test5 123qweasd
 xufang5872@gmail.com  xu123456fang
 facebook:carol.miao@dewav.com  m123456
@@ -53,7 +52,6 @@ Folder:/[第三方资源][软件版本]
 Domain name:dewav
 user name:dewav.com/alex.xiao
 password:alex
-
 
 172.16.19.211  255.255.255.0  172.16.19.1
 172.16.20.2
@@ -104,14 +102,11 @@ http://139.196.53.182
     账户：DewavSH (注意大小写)
     密码：DEwavsh123（注意大小写）
           
-
 4.CQ系统
     http://222.66.158.139:2008/cqweb/login
     账号：dewavsh
     密码：dewavsh++
 
-
 DCC CANDY finny
 
 AOSP6582_L　　E3568　L_MT6753　M_MT6737_MP　MT6580_M　　MT6737_O_N　　MT6750_O_N 
-

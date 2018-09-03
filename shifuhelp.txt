@@ -1,0 +1,78 @@
+师傅上门相关
+测试服：
+1.	微信下单:
+水电安装
+http://aksd.qubaotang.cn/indexB.html#/home
+15821938850    a123456
+水电维修
+http://aksd.qubaotang.cn/indexV.html
+2.	后台管理
+http://aksd.qubaotang.cn/manager_index.html#/
+xiaozhang  a123456
+database:123456
+3.	Android app
+https://www.pgyer.com/uau9 
+15555555555   a123456
+15821938850   a123456
+18621703453   a123456
+4.	服务器
+101.132.111.96  root  shifuhelp123A
+
+
+正式服：
+1.后台管理
+http://wx.shifuhelp.com/manager_index.html#/
+xiaozhang  a123456
+database:AkanShifu100#
+2.App端
+15821938850   a123456
+18621703453   a123456
+
+3.服务器
+106.14.168.155  18822
+root  Akan100years
+
+
+起飞
+http://180.167.47.14:8088/aknew/   肖张鑫 a123456
+
+akan_ims
+http://akan.qubaotang.cn/akan.html#/   fanglin  123456
+
+
+朴勒防水:
+http://wx.shifuhelp.com/waterproofof.html
+
+阿里云服务器
+账号：爱康师傅上门
+密码：123456Qwe
+
+微信开放平台
+账号： aikangshuidianzh@163.com
+密码：123456Qwe
+wifi  Akan100years
+
+微信公众号
+账号：1962189750@qq.com
+密码：akan123456
+
+极光推送
+账号：aikangshuidianzh@163.com 
+密码：123456Qwe
+
+苹果开发账号
+账号：aucma760605@163.com
+密码：Liyixitujia060610
+邓白氏编码：544549766
+
+Git地址: git@192.168.0.140:/home/git/shifushangmen_repo.git 密码: alex
+
+BugFree http://192.168.0.233:8081/bugfree/index.php 
+账号:admin  123456
+
+蒲公英平台
+158219388501  a123456
+
+
+
+
