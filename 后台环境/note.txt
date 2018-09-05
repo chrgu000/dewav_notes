@@ -1,47 +1,44 @@
-/**************************************ºóÌ¨´úÂë START**********************************/
-WebStorm±àÒëºóÌ¨´úÂë£¬½øÈë¸ùÄ¿Â¼
-npm install webpack -g  ÒÀÀµ
+/**************************************åå°ä»£ç  START**********************************/
+WebStormç¼–è¯‘åå°ä»£ç ï¼Œè¿›å…¥æ ¹ç›®å½•
+npm install webpack -g  ä¾èµ–
 Unknown plugin "component" specified -->npm install babel-plugin-component -D
 (npm install)
-½øÈëai_kang_shui_dian_manager
+è¿›å…¥ai_kang_shui_dian_manager
 npm run build 
 
-±àÒë³É¹¦ºó½«
+ç¼–è¯‘æˆåŠŸåå°†
 ai_kang_shui_dian_manager/dist/manager/
 ai_kang_shui_dian_manager/dist/manager_index.html
-¸´ÖÆµ½·şÎñÆ÷¸ùÄ¿Â¼/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian
-/**************************************ºóÌ¨´úÂë END**********************************/
+å¤åˆ¶åˆ°æœåŠ¡å™¨æ ¹ç›®å½•/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian
+/**************************************åå°ä»£ç  END**********************************/
 
-/**************************************java´úÂë START**********************************/
-idea±àÒëjava´úÂë
-½øÈëai_kang_shui_dian
-ÔÚApplication.javaÓÒ¼ürun Application
+/**************************************javaä»£ç  START**********************************/
+ideaç¼–è¯‘javaä»£ç 
+è¿›å…¥ai_kang_shui_dian
+åœ¨Application.javaå³é”®run Application
 Run Application
-±àÒë³É¹¦ºó½«
+ç¼–è¯‘æˆåŠŸåå°†
 ai_kang_shui_dian/target/classes/com
 ai_kang_shui_dian/target/classes/mapper
-¸´ÖÆµ½·şÎñÆ÷
-/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian/WEB-INF/classes/ÏÂ
-ÖØĞÂ±àÒëÒªÏÈstop application
-/**************************************Ç°¶Ë´úÂë END**********************************/
+å¤åˆ¶åˆ°æœåŠ¡å™¨
+/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian/WEB-INF/classes/ä¸‹
+é‡æ–°ç¼–è¯‘è¦å…ˆstop application
+/**************************************å‰ç«¯ä»£ç  END**********************************/
 
-/**************************************Android´úÂë START**********************************/
-android¶ËÉú³Éapk   Build--Generate signed APK
+/**************************************Androidä»£ç  START**********************************/
+androidç«¯ç”Ÿæˆapk   Build--Generate signed APK
 shifuhelp/aksd.jks
 build.gradle
 keyAlias 'key0'
 keyPassword 'zhengan88'
-/**************************************Android´úÂë END**********************************/
+/**************************************Androidä»£ç  END**********************************/
 
 
-/**************************************Î¢ĞÅ¶Ë´úÂë START**********************************/
-Î¢ĞÅ¶Ë
+/**************************************å¾®ä¿¡ç«¯ä»£ç  START**********************************/
+å¾®ä¿¡ç«¯
 (npm install)
 npm run build
-Éú³ÉµÄdist
-ÎÄ¼ş¼ĞÏÂµÄb-app/    indexB.html ¸²¸Ç·şÎñÆ÷
-/**************************************Î¢ĞÅ¶Ë´úÂë END**********************************/
+ç”Ÿæˆçš„dist
+æ–‡ä»¶å¤¹ä¸‹çš„b-app/    indexB.html è¦†ç›–æœåŠ¡å™¨
+/**************************************å¾®ä¿¡ç«¯ä»£ç  END**********************************/
 
-·şÎñÆ÷
-106.14.168.155£º22
-root  Akan100years
