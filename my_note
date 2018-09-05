@@ -252,6 +252,7 @@ sudo mkfs -t ext3 /dev/sdb    把/dev/sdb硬盘格式化为ext3形的
 sudo mount /dev/sdb  /media     挂载/dev/sdb硬盘到/media下～
 sudo umount /dev/sdb  /media    取消挂载在/media下的硬盘
 把mount 的命令放到/etc/rc.d/rc.local 里面去，vi /etc/rc.d/rc.local ，然后把 mount -t nfs dl1:/home/users /home/users 这个命令写进去。保存退出就好了。
+注意修改rm.local的权限 (chmod +x)
 sudo hdparm -tT /dev/sdb  测试读写速度
 
 将某个服务器挂载到本机下面 密码scm
