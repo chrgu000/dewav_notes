@@ -48,6 +48,9 @@ git log --since="2014-2-23" --before="2014-3-31"
 gitk 可视化界面
 qgit <path>
 git log --pretty=oneline <filename> 查看某一文件的log
+object数据库中删除所有不可达的object
+git gc --prune=now --aggressive
+
 
 //------------git相关END-----------------------------
 

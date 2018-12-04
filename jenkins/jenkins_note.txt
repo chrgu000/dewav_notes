@@ -1,0 +1,98 @@
+/var/lib/jenkins/secrets/initialAdminPassword
+/var/lib/jenkins
+
+jdk路径 vi /etc/init.d/jenkins
+
+
+/etc/passwd文件中的/bin/bash被yum安装的时候变成了/bin/false.
+
+然后我执行cat /etc/passwd命令，果然被改成了/bin/false
+
+
+①vim ~/.bash_profile 
+执行上面的命令，即使没有.bash_profile文件，linux会自动创建。 
+②然后再添加这句
+
+export PS1='[\u@\h \W]\$'
+
+
+xiaozhang  123456
+
+vi /etc/sysconfig/jenkins
+
+git clone git@192.168.0.122:/home/git/temp_repo.git
+
+
+/bin/sh   /home/build.sh
+
+
+
+#!/usr/bin/expect -f
+set timeout 20
+set password "xiaozhang"
+spawn su - root
+expect  "*密码*"
+send "$password\n"
+
+exec sh -c  {echo "adsfdsf"}
+exec sh -c  {./file2.sh}
+interact
+
+
+
+6、卸载jenkins
+
+service jenkins stop
+yum clean all
+
+yum -y remove jenkins
+
+
+
+centos7 mysql8
+service start mysql.service
+service stop mysql.service
+#禁止mysql服务开机启动
+systemctl disable mysql.service
+#查看mysql服务状态
+systemctl status mysql.service
+#重新设置mysql服务开机启动
+systemctl enable mysql.service
+
+
+
+
+插件下载
+Extended E-mail Notification
+user build vars plugin
+
+
+邮件默认内容
+$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+<br>
+<br>
+构建人姓名:$BUILD_USER    构建人ID:$BUILD_USER_ID  构建人邮箱$BUILD_USER_EMAIL
+<br>
+<br>
+git版本库路径:$GIT_URL
+<br>
+<br>
+git分支:$GIT_BRANCH
+<br>
+<br>
+git当前节点:$GIT_COMMIT
+<br>
+<br>
+git上一节点:$GIT_PREVIOUS_COMMIT
+<br>
+<br>
+Check console output at $BUILD_URL to view the results.
+
+
+
+
+
+
+
+
+
