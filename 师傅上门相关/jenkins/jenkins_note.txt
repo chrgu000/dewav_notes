@@ -60,7 +60,7 @@ systemctl status mysql.service
 systemctl enable mysql.service
 
 
-
+service jenkins start/stop/restart
 
 插件下载
 Extended E-mail Notification
@@ -88,9 +88,8 @@ git上一节点:$GIT_PREVIOUS_COMMIT
 <br>
 Check console output at $BUILD_URL to view the results.
 
-
-
-
+修改jenkins的build number
+Jenkins.instance.getItemByFullName("YourJobName").updateNextBuildNumber(45)
 
 
 

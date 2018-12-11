@@ -1,0 +1,37 @@
+180.167.47.14
+xiaozhangxin   密码：Xzx@123
+zhoujun Akan@123456
+chenyantao Akan@123456
+Akan!2018
+118.24.229.52
+配置VPN。下载安装包命令：yum install ppp pptp pptp-setup设置：pptpsetup --create<定义的名称> --server<服务器>  --username <用户名> --password <密码> [--start]<>必填,[]可选关闭命令：kill all pppd启用命令：pppd call
+关闭防火墙
+pptpsetup --create vpn1 --server 180.167.47.14  --username xiaozhangxin --password Xzx@123 --start   
+
+pptpsetup --create vpn1 --server 180.167.47.14  --username chenyantao --password Akan@123456 --start   114.84.221.53
+
+pppd call codelife
+
+ip a |grep ppp
+route -n
+
+# tail -f /var/log/messages | grep ppp
+ps -ef | grep pppd
+
+
+unknown authentication 
+vi /etc/ppp/options   （不是 options.pptp,被网上到处转的某个文章误导很久）
+refuse-pap
+refuse-eap
+refuse-chap
+refuse-mschap
+require-mppe
+
+cat/proc/net/arp
+
+
+cp /usr/share/doc/ppp-2.4.5/scripts/pon /usr/sbin/
+cp /usr/share/doc/ppp-2.4.5/scripts/poff /usr/sbin/
+chmod +x /usr/sbin/pon /usr/sbin/poff
+
+spss

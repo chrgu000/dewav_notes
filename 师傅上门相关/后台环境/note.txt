@@ -1,5 +1,5 @@
 /**************************************后台代码 START**********************************/
-WebStorm编译后台代码，进入根目录
+WebStorm编译后台管理代码，进入根目录
 npm install webpack -g  依赖
 Unknown plugin "component" specified -->npm install babel-plugin-component -D
 (npm install)
@@ -10,8 +10,9 @@ npm run build
 ai_kang_shui_dian_manager/dist/manager/
 ai_kang_shui_dian_manager/dist/manager_index.html
 复制到服务器根目录/usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian
+npm i -g webpack
 /**************************************后台代码 END**********************************/
-
+ 
 /**************************************java代码 START**********************************/
 idea编译java代码
 进入ai_kang_shui_dian
@@ -23,16 +24,13 @@ ai_kang_shui_dian/target/classes/mapper
 复制到服务器
 /usr/local/web/tomcat9.0/webapps/ai_kang_shui_dian/WEB-INF/classes/下
 重新编译要先stop application
+centos命令行编译
+mvn clean
+mvn install
+
+docker虚拟机
+docker exec -it mysql bash
 /**************************************前端代码 END**********************************/
-
-/**************************************Android代码 START**********************************/
-android端生成apk   Build--Generate signed APK
-shifuhelp/aksd.jks
-build.gradle
-keyAlias 'key0'
-keyPassword 'zhengan88'
-/**************************************Android代码 END**********************************/
-
 
 /**************************************微信端代码 START**********************************/
 微信端
@@ -42,3 +40,32 @@ npm run build
 文件夹下的b-app/    indexB.html 覆盖服务器
 /**************************************微信端代码 END**********************************/
 
+/**************************************Android代码 START**********************************/
+android端生成apk   Build--Generate signed APK
+shifuhelp/aksd.jks
+build.gradle
+keyAlias 'key0'
+keyPassword 'zhengan88'
+Constants.java
+build.gradle versionName "2.2.3"
+//public static final String BASE_URL = "http://aksd.qubaotang.cn/";
+  public static final String BASE_URL = "http://wx.shifuhelp.com/";
+/**************************************Android代码 END**********************************/
+
+正式服务器
+106.14.168.155  18822
+root  Akan100years
+数据库密码:AkanShifu100#
+
+测试服务器
+101.132.111.96
+root shifuhelp123A
+数据库123456
+
+后台正式服上线
+39ebe40334c2716689916cb2e14ee7976118e833
+微信端使用测试服
+f44487251b31c29a31d549230c109f39d347dcac
+rsync
+
+ssh -t -p 22 root@10.130.3.211 "/opt/tomcat/bin/restart.sh"
