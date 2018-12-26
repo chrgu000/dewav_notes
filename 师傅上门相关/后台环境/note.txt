@@ -1,4 +1,4 @@
-/**************************************后台代码 START**********************************/
+﻿/**************************************后台代码 START**********************************/
 WebStorm编译后台管理代码，进入根目录
 npm install webpack -g  依赖
 Unknown plugin "component" specified -->npm install babel-plugin-component -D
@@ -28,8 +28,11 @@ centos命令行编译
 mvn clean
 mvn install
 
-docker虚拟机
-docker exec -it mysql bash
+docker相关
+docker镜像,虚拟机
+docker ps -a 查看所有虚拟机
+docker exec -it mysql bash 进入某个虚拟器
+docker restart akan_test 重启某个虚拟机
 /**************************************前端代码 END**********************************/
 
 /**************************************微信端代码 START**********************************/

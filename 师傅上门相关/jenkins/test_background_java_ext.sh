@@ -14,7 +14,13 @@ ifExecuteSuccess () {
 
 cd background_sourcecode/akan_management
 
-cp  /root/shell_related/application.yml    ./src/main/resources/
+#cp  /root/shell_related/application.yml    ./src/main/resources/
+
+sed -i 's/akan_management/akan_test/' ./src/main/resources/application.yml
+
+sed  -i 's/database: 2/database: 3/' ./src/main/resources/application.yml
+
+sed  -i 's/akanjob/akantestjob/' ./src/main/resources/application.yml
 
 source /etc/profile
 
