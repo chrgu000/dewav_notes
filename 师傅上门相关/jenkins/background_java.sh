@@ -34,7 +34,13 @@ echo "代码已同步到服务器最新版本！"
 
 cd background_sourcecode/akan_management
 
+sed -i 's/8081/8083/g' ./src/main/resources/application.yml
+
+#sed  -i 's/database: 2/database: 3/' ./src/main/resources/application.yml
+
 source /etc/profile
+
+mvn clean
 
 mvn install
 
@@ -55,11 +61,12 @@ echo  "恭喜你，编译成功！！！目标文件在:${tar_dir}"
 remoteip="180.167.47.14"
 #--delete
 
-rsync  -rvz  ${tar_dir}/akan_management.war ${remoteip}:/data/docker/tomcat/akan_management
+#rsync  -rvz  ${tar_dir}/akan_management.jar ${remoteip}:/data/docker/tomcat/akan_management
+rsync  -rvz  ${tar_dir}/akan_management.jar ${remoteip}:/data/jar
 ifExecuteSuccess $?
 
 
-echo   "文件已同步到远程服务器${remoteip}:/data/docker/tomcat/akan_management下"
+echo   "文件已同步到远程服务器${remoteip}:/data/docker/jar下"
 
 remote_cmd="/home/remote.sh"
 ssh -t root@${remoteip}  ${remote_cmd}
