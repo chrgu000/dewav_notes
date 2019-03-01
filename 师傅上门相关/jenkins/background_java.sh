@@ -27,15 +27,16 @@ ifExecuteSuccess $?
 cd ${git_repo_name}/
 
 git reset --hard HEAD
-#git clean -fd
+git clean -fd
 git pull --rebase
 
 echo "代码已同步到服务器最新版本！"
 
 cd background_sourcecode/akan_management
 
-sed -i 's/8081/8083/g' ./src/main/resources/application.yml
-
+sed -i 's/192.168.0.208/192.168.0.202/g' ./src/main/resources/application.yml
+sed -i 's/#configuration:/configuration:/g' ./src/main/resources/application.yml
+sed -i 's/#log-impl:/log-impl:/g' ./src/main/resources/application.yml
 #sed  -i 's/database: 2/database: 3/' ./src/main/resources/application.yml
 
 source /etc/profile

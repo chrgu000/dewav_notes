@@ -15,7 +15,7 @@ cd android_sourcecode/
 
 source /etc/profile
 
-sed  -i   's/akantest.qubaotang.cn:81/crm.akan.com.cn:82/g'  ./app/src/main/java/com/akan/qf/Constants.java
+sed  -i   's/akan.qubaotang.cn:81/crm.akan.com.cn:82/g'  ./app/src/main/java/com/akan/qf/Constants.java
 
 echo "域名修改为crm.akan.com.cn:82"
 
@@ -32,4 +32,4 @@ rsync   app/build/outputs/apk/app-release.apk   /root/shell_related/
 
 ifExecuteSuccess $?
 
-echo  "app-release.apk已同步到/root/shell_related/下"
+echo  "app-release.apk已同步到/root/shell_related/下,已成功生成最新Apk!"

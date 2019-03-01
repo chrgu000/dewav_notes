@@ -33,8 +33,7 @@ git pull --rebase
 echo "代码已同步到服务器最新版本！"
 
 cd web_management
-sed  -i 's/crm.akan.com.cn:82/akan.qubaotang.cn:81/' ./src/config/env.js
-
+sed  -i 's/crm.akan.com.cn:82/akan.qubaotang.cn:85/' ./src/config/env.js
 source /etc/profile
 
 if  [ -d "node_modules" ]
@@ -63,16 +62,22 @@ echo  "恭喜你，编译成功！！！目标文件在:${tar_dir}"
 
 remoteip="180.167.47.14"
 #--delete
-rsync  --delete -rvz  ${tar_dir}/akan/*  ${remoteip}:/data/static/akan_management/akan
-rsync  -rvz  ${tar_dir}/akan.html  ${remoteip}:/data/static/akan_management/
+#rsync --delete -rvz  ${tar_dir}/akan/*  ${remoteip}:/data/static/akan_management/akan
+#rsync --delete -rvz  ${tar_dir}/akan.html  ${remoteip}:/data/static/akan_management/
+
+rsync --delete -rvz  ${tar_dir}/akan  ${remoteip}:/home/209_related
+rsync --delete -rvz  ${tar_dir}/akan.html  ${remoteip}:/home/209_related
 ifExecuteSuccess $?
+
+
+remote_cmd="/home/209_related/209_web.sh"
 
 
 echo   "文件已同步到远程服务器${remoteip}:/data/static/akan_management/下"
 
-remote_cmd="/home/remote.sh"
+#remote_cmd="/home/remote.sh"
 
-#ssh -t root@${remoteip}  ${remote_cmd}
+ssh -t root@${remoteip}  ${remote_cmd}
 
 #if [ $?  -eq 0 ]
 #then

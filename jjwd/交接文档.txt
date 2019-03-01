@@ -1,0 +1,89 @@
+﻿师傅上门平台:
+代码服务器:
+     仓库:git@192.168.0.122:/home/git/shifuhelp_repo.git
+     分支：master
+	正式服:
+		SSH：
+			IP:	106.14.168.155
+			端口：40339
+			密码：张总保管
+		数据库：
+			IP: 106.14.168.155
+			库名：ai_kang_shui_dian
+			端口：40036
+			用户：root
+			密码：3396Zmr3Wj0VoflC
+			安装目录：/usr/local/web/mysql-8.0
+		redis:
+			IP：106.14.168.155
+			端口：50001
+			密码：5F*hDgVA$il0F$5G
+		主从同步服务器：
+			SSH：
+				IP：192.168.0.122
+				端口：22
+				密码：xiaozhang
+			MYSQL：
+				库名：ai_kang_shui_dian
+				端口：40036
+				用户：root
+				密码：3396Zmr3Wj0VoflC
+				安装目录：/usr/local/web/mysql-8.0
+		备份：
+			sql备份脚本:/data/shell/backup_ai_kang_shui_dian_sql.sh
+			静态资源备份脚本：/data/shell/backup_ai_kang_shui_dian_resource.sh
+		nginx:
+			目录：/usr/local/web/nginx-1.13
+			配置文件：/usr/local/web/nginx-1.13/conf/nginx.conf
+			https证书：
+				官网：
+					证书：/data/cert/1539171034006.pem;
+					秘钥：/data/cert/1539171034006.key;
+				师傅上门：
+					证书：/data/cert/1539793475322.pem;
+					秘钥：/data/cert/1539793475322.key;
+		tomcat:
+			目录：/usr/local/web/tomcat-9.0
+		jdk:
+			目录：/usr/local/web/jdk-1.8
+	测试服
+		IP:192.168.0.202
+		密码：xiaozhang
+		测试服配置
+		/root/shell_related/shifuhelp/pom.xml   
+		/root/shell_related/shifuhelp/application.yml ./src/main/resources/
+ 		target/ai_kang_shui_dian.jar 192.168.0.202:/data/jar
+
+爱康企业管理系统平台
+测试服:192.168.0.202  正式服:192.168.0.208：配置的位置一样
+代码服务器:
+     仓库:git@192.168.0.122:/home/git/shifuhelp_repo.git
+     分支：aikan_ims
+	docker：
+		dockerfile:/data/docker/dockerfile
+		配置文件：/data/docker/conf
+		开机自启动脚本：/data/docker/start.sh
+		jar包目录:/data/jar
+		nginx静态资源代理目录：/data/static
+	redis:
+		端口：50001
+		密码：5F*hDgVA$il0F$5G
+	mysql:
+		端口：40036
+		密码：3396Zmr3Wj0VoflC
+
+	sql备份：
+		
+		服务器：192.168.0.202
+		
+		脚本：/data/mysql/backup_akan_slave_sql.sh
+		
+		保存目录:/data/mysql/backup
+
+接口文档:
+	转交到校长的eolinker账号
+
+
+qubaotang域名暂给公司使用
+
+

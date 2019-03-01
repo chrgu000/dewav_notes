@@ -44,7 +44,7 @@ echo  "恭喜你，编译成功！！！目标文件在:${tar_dir}"
 
 remoteip="180.167.47.14"
 #--delete
-rsync  -rvz  ${tar_dir}/akan/*  ${remoteip}:/data/static/akan_test/akan
+rsync --delete  -rvz  ${tar_dir}/akan/*  ${remoteip}:/data/static/akan_test/akan
 rsync  -rvz  ${tar_dir}/akan.html  ${remoteip}:/data/static/akan_test/
 ifExecuteSuccess $?
 
