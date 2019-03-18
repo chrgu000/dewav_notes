@@ -1,0 +1,42 @@
+jdk  sdk  grandle  
+
+/opt/android-sdk/platform-tools/api/annotations.zip
+
+
+gradle编译命令 & 自动打包等
+./gradlew -v 版本号，首次运行，没有gradle的要下载的哦。
+
+./gradlew clean 删除HelloWord/app目录下的build文件夹
+
+./gradlew build 检查依赖并编译打包
+
+./gradlew assembleDebug 编译并打Debug包
+
+./gradlew assembleRelease 编译并打Release的包
+
+./gradlew installRelease Release模式打包并安装
+
+./gradlew uninstallRelease 卸载Release模式包
+
+export GRADLE_HOME=/usr/local/gradle
+export PATH=$GRADLE_HOME/bin:$PATH
+
+
+export ANDROID_HOME=/usr/local/android-sdk-linux
+export PATH=$ANDROID_HOME/tools:$PATH
+
+
+安装所有包
+android update sdk --no-ui
+或者查看序列号
+android list sdk --all
+
+android update sdk -u -a -t 3
+
+查看下项目所用的Gradle版本
+gradlew -v
+下载Gradle的一些依赖
+gradlew clean
+直接编译并生成相应的apk文件
+gradlew build
+在/app/build/outputs/apk目录下就会有生成的apk包

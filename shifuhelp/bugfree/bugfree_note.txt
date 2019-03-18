@@ -1,0 +1,130 @@
+windows
+Xampp5.xx的版本
+htdocs下添加bugfile文件夹
+
+linux修改httpd端口号
+/opt/lampp/etc/httpd.conf
+/opt/lampp/lampp端口改为一致
+
+centos下Xampp+bugfree安装
+Xampp+bugfree安装
+
+Xamp安装
+
+1.       http://www.apachefriends.org/download.html下载xampp安装包，
+
+因为我们是要安装到linux下面，所以下载xampp的linux版本，并且选择适合自己操作系统位数的版本（32位跟64位之分）
+
+ps：如何查看自己linux操作系统位数：
+
+在linux终端下（或者crt、xshell之类）敲击命令：uname –a，如果后面出现的是x86——64，有显著64标志的就是64位，那么你下载64位的xampp版本，没有显著64标志的就是32位，下载32位xampp
+
+ 
+
+ 
+
+2.       安装xampp
+
+将xampp上传到linux服务器下，比如我们上传到/opt目录下
+
+ 第一步：chmod 755 xampp-linux-*-installer.run
+
+ 第二步：sudo ./xampp-linux-*-installer.run
+
+ 第三步：sudo ./manager-linux.run (or manager-linux-x64.run)
+
+现在xampp安装到了/opt/lampp下
+
+ 
+
+3.       启动xampp
+
+   sudo /opt/lampp/lampp start
+
+   启动会出现类似信息
+
+Starting XAMPP 1.8.2...
+    LAMPP: Starting Apache...
+    LAMPP: Starting MySQL...
+    LAMPP started.
+
+    Ready. Apache and MySQL are running.
+
+ 
+
+此时不代表全部启动，用ps –ef|grep  httpd  以及ps –ef|grep mysql 看看服务是否启动正常
+
+ 
+
+4.       停止xampp     
+
+           sudo /opt/lampp/lampp stop
+
+ 
+
+ 出现
+
+Stopping XAMPP 1.8.2...
+LAMPP: Stopping Apache...
+LAMPP: Stopping MySQL...
+LAMPP stopped.
+
+ 
+
+如果最终没有停止，就强行杀掉，kill -9 pid
+
+ 
+
+5.       安装bugfree
+
+将bugfree安装包放到linux 的/opt目录下
+
+ 
+
+   A:  解压bugfree  unzip  bugfree*
+
+   B： 改名，cp  -r bugfree-3.0.1（文件名是自己解压后的名字，自己按照自己的文件名字改）bugfree
+
+C：讲bugfree拷贝到apache的工程路径下：cp -r bugfree /opt/lampp/htdocs/
+D：在linux服务器当前机器下开浏览器窗口，输入：http://localhost/bugfree/install，开始安装
+
+ 
+注意非本机时需要开启80端口。
+环境检查：没有权限的赋权限，没有文件的创建文件，一直到环境检查通过
+cd bugfree 
+mkdir BugFile 
+chmod 777 BugFile
+ 
+E：配置
+
+ 
+这里注意服务器名写localhost或者服务器的IP地址
+数据库名随便
+用户名：root
+密码为空，不要填写
+前缀：随意
+D：完成安装
+
+ 
+ 
+ 
+6.       允许远程访问bugfree
+
+systemctl disable firewalld
+systemctl stop firewalld
+关闭linux下的防火墙，允许远程访问bugfree，注意远程访问的IP地址就不要写localhost了，改成bugfree机器的ip
+
+疑问用此方式安装后，bugfree可以正常访问。但使用service mysqld status,service httpd status无法看到，得用ps -ef|grep mysql命令来查看。
+ 
+linux版本的xampp是如下命令：
+
+/opt/lampp/bin/mysqladmin -u root -p password 新密码
+
+
+
+请注意，更改 root 的密码之后，不要忘记更改 PHPMyAdmin 中的相关信息。在 \...\xampp\phpmyadmin\ 下搜索“config.inc.php”并编辑下面几行：
+
+$cfg['Servers'][$i]['user'] = 'root'; // MySQL SuperUser
+$cfg['Servers'][$i]['auth_type'] = 'http'; // HTTP MySQL authentification 
+
+从今往后，需要正确输入“root”的密码才能启动 PHPMyAdmin

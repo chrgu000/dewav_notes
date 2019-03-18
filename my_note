@@ -225,7 +225,7 @@ Alt + Enter导入包
 重命名  选中文件---refactor--rename file
 
 /************************android studio基本操作 end************************************************************************/ 
-
+grep -r --include=*.{java,xml}    "ff"  android_sourcecode/
 grep -r -i "AAA" /home/alex/文档(后面带个.从表示当前目录搜索)
 $ grep ‘test’ d*
 显示所有以d开头的文件中包含 test的行。

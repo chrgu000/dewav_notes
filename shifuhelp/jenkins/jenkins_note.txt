@@ -1,0 +1,158 @@
+/var/lib/jenkins/secrets/initialAdminPassword
+/var/lib/jenkins
+
+rpm -ivh jenkins-1.562-1.1.noarch.rpm
+jdk路径 vi /etc/init.d/jenkins
+/usr/local/web/jdk-1.8/bin/java
+/usr/local/web/jdk-1.8/jre/bin/java
+/etc/passwd文件中的/bin/bash被yum安装的时候变成了/bin/false.
+
+然后我执行cat /etc/passwd命令，果然被改成了/bin/false
+
+
+1.将jenkins账号分别加入到root组中
+
+gpasswd -a root jenkins
+gpasswd -a alex  git 将alex加入到git组
+2.修改/etc/sysconfig/jenkins文件中，
+
+# user id to be invoked as (otherwise will run as root; not wise!)
+JENKINS_USER="root"
+JENKINS_GROUP="root"
+
+
+①vim ~/.bash_profile 
+执行上面的命令，即使没有.bash_profile文件，linux会自动创建。 
+②然后再添加这句
+
+export PS1='[\u@\h \W]\$'
+
+
+xiaozhang  123456
+
+vi /etc/sysconfig/jenkins
+
+git clone git@192.168.0.122:/home/git/temp_repo.git
+
+
+/bin/sh   /home/build.sh
+
+
+
+#!/usr/bin/expect -f
+set timeout 20
+set password "xiaozhang"
+spawn su - root
+expect  "*密码*"
+send "$password\n"
+
+exec sh -c  {echo "adsfdsf"}
+exec sh -c  {./file2.sh}
+interact
+
+6、卸载jenkins
+
+service jenkins stop
+yum clean all
+
+yum -y remove jenkins
+rm -rf /var/cache/jenkins
+rm -rf /var/lib/jenkins/
+
+centos7 mysql8
+service jenkins start
+service jenkins stop
+
+systemctl start postfix.service
+systemctl stop postfix.service
+#禁止mysql服务开机启动
+systemctl disable mysql.service
+#查看mysql服务状态
+systemctl status mysql.service
+#重新设置mysql服务开机启动
+systemctl enable mysql.service
+
+
+service jenkins start/stop/restart
+
+插件下载
+Extended E-mail Notification
+user build vars plugin
+
+
+邮件默认内容
+$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+<br>
+<br>
+构建人姓名:$BUILD_USER    构建人ID:$BUILD_USER_ID  构建人邮箱$BUILD_USER_EMAIL
+<br>
+<br>
+git版本库路径:$GIT_URL
+<br>
+<br>
+git分支:$GIT_BRANCH
+<br>
+<br>
+git当前节点:$GIT_COMMIT
+<br>
+<br>
+git上一节点:$GIT_PREVIOUS_COMMIT
+<br>
+<br>
+Check console output at $BUILD_URL to view the results.
+
+修改jenkins的build number
+Jenkins.instance.getItemByFullName("YourJobName").updateNextBuildNumber(45)
+
+开机自动启动
+systemctl enable jenkins.servic
+
+//不能从git拉代码
+jenkins获取root权限
+选择jenkins版本
+公钥
+
+gpasswd -a root jenkins   //root加入到jenkins组
+gpasswd -d root jenkins   //root移出jenkins组
+JENKINS_USER=root
+JENKINS_GROUP=root
+
+
+ssh-copy-id -i .ssh/id_rsa.pub  用户名字@192.168.x.xxx
+
+
+ssh-keygen -t rsa -C
+
+用户目录权限为 755 或者 700，就是不能是77x。
+.ssh目录权限一般为755或者700。
+rsa_id.pub 及authorized_keys权限一般为644
+rsa_id权限必须为600
+
+严厉模式修改
+/etc/ssh/sshd_config
+StrictModes
+cat /var/log/secure
+二、selinux 
+### 查看防火墙状态
+getenforce
+
+### 临时开启防火墙
+setenforce 1
+
+### 临时关闭防火墙
+setenforce 0
+ 
+### 永久关闭防火墙
+vi /etc/selinux/config   修改selinux设置为disabled
+### 查看防火墙状态
+systemctl  status firewalld?
+### 临时开启防火墙            
+systemctl start firewalld
+### 临时停止防火墙           
+systemctl stop firewalld
+### 重启防火墙
+systemctl restart firewalld
+### 禁用防火墙，重启或开机不会自动启用，永久关闭           
+systemctl disable firewalld
+### 重启或开机自动启用防火墙
+systemctl enable firewalld
