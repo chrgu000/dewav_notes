@@ -168,6 +168,9 @@ sudo reboot
 logout
 
 cp -r复制
+开机自启动
+软链接：ln -s /opt/lampp/xampp  /etc/rc.d/init.d/xampp
+
 /************************vim基本操作 start************************************************************************/  
 文件(编辑文件)，Shift + ":"(退出对话框),q!退出不保存,wq保存退出
 vim显示行号:set number
